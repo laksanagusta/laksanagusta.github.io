@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>boring. — Design System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            boring: {
+              bg: '#000000',
+              surface: '#09090B',
+              'surface-elevated': '#18181B',
+              border: '#27272A',
+              'border-subtle': '#3F3F46',
+              text: '#FAFAFA',
+              'text-secondary': '#A1A1AA',
+              'text-muted': '#71717A',
+              accent: '#22C55E',
+              'accent-dim': '#166534',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-boring-bg text-boring-text font-sans antialiased;
+      }
+      code, pre {
+        @apply font-mono;
+      }
+    }
+    @layer components {
+      .ds-section {
+        @apply border-b border-boring-border pb-16 mb-16;
+      }
+      .ds-label {
+        @apply text-xs font-mono text-boring-text-muted uppercase tracking-widest mb-4;
+      }
+      .token-card {
+        @apply bg-boring-surface-elevated border border-boring-border rounded-lg p-4 font-mono text-sm;
+      }
+      .project-showcase-grid {
+        @apply grid gap-8 lg:grid-cols-[0.95fr_1.05fr] items-center;
+      }
+      .project-showcase-visual {
+        @apply relative min-h-[420px] overflow-hidden rounded-[24px] border border-boring-border bg-boring-surface;
+      }
+      .project-showcase-visual::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.32));
+        pointer-events: none;
+      }
+      .project-showcase-visual::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(24, 24, 27, 0.62), rgba(24, 24, 27, 0.18) 40%, rgba(24, 24, 27, 0.62));
+        pointer-events: none;
+      }
+      .project-showcase-copy {
+        @apply px-0;
+      }
+    }
+  </style>
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3F3F46; }
+    
+    /* Terminal blink */
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    
+    /* Computer frame styling */
+    .computer-frame {
+      background: #E8E4DC;
+      border-radius: 24px;
+      padding: 24px 24px 32px;
+      box-shadow: 
+        0 0 0 1px rgba(0,0,0,0.1),
+        0 20px 40px -10px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+      position: relative;
+    }
+    .computer-frame::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 2px solid #D4CFC6;
+      border-radius: 16px;
+      pointer-events: none;
+    }
+    .computer-screen {
+      background: #0D0D0D;
+      border-radius: 12px;
+      padding: 24px;
+      min-height: 320px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .computer-brand {
+      color: #8B8680;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+    .computer-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+    }
+    
+    /* Grid table borders */
+    .grid-table {
+      display: grid;
+      border: 1px solid #27272A;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .grid-table-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-table-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-cell {
+      padding: 24px;
+      border-right: 1px solid #27272A;
+      border-bottom: 1px solid #27272A;
+    }
+    .grid-cell:nth-child(3n) { border-right: none; }
+    .grid-cell:nth-last-child(-n+3):nth-child(3n+1),
+    .grid-cell:nth-last-child(-n+3):nth-child(3n+2),
+    .grid-cell:nth-last-child(-n+3):nth-child(3n+3) { border-bottom: none; }
+    
+    @media (max-width: 768px) {
+      .grid-table-3, .grid-table-2 { grid-template-columns: 1fr; }
+      .grid-cell { border-right: none; }
+      .grid-cell:nth-last-child(-n+3) { border-bottom: 1px solid #27272A; }
+      .grid-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Navigation -->
+  <nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="font-mono text-sm font-semibold text-boring-text">boring.</a>
+    <div class="flex items-center gap-6">
+      <a href="#tokens" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Tokens</a>
+      <a href="#components" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Components</a>
+      <a href="#project-showcase" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Projects</a>
+      <a href="#preview" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Preview</a>
+      <a href="https://github.com" target="_blank" class="text-boring-text-secondary hover:text-boring-text transition-colors">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="max-w-5xl mx-auto px-6 pt-12 pb-16">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Design System</h1>
+    <p class="text-boring-text-secondary text-lg max-w-xl">A comprehensive token and component reference for the boring. aesthetic — dark, minimal, utilitarian.</p>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 pb-32">
+
+    <!-- DESIGN TOKENS SECTION -->
+    <section id="tokens" class="ds-section">
+      <div class="ds-label">Design Tokens</div>
+      
+      <!-- Color Tokens -->
+      <div class="mb-12">
+        <h2 class="text-lg font-semibold mb-6">Colors</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-bg border border-boring-border mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-bg</div>
+            <div class="text-boring-text font-mono text-sm">#000000</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-surface-elevated mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-surface</div>
+            <div class="text-boring-text font-mono text-sm">#18181B</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-border mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-border</div>
+            <div class="text-boring-text font-mono text-sm">#27272A</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-text mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-text</div>
+            <div class="text-boring-text font-mono text-sm">#FAFAFA</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-text-secondary mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-text-secondary</div>
+            <div class="text-boring-text font-mono text-sm">#A1A1AA</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-text-muted mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-text-muted</div>
+            <div class="text-boring-text font-mono text-sm">#71717A</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-accent mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-accent</div>
+            <div class="text-boring-text font-mono text-sm">#22C55E</div>
+          </div>
+          <div class="token-card">
+            <div class="w-full h-16 rounded-lg bg-boring-surface mb-3"></div>
+            <div class="text-boring-text-secondary text-xs">--color-surface-subtle</div>
+            <div class="text-boring-text font-mono text-sm">#09090B</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography Tokens -->
+      <div class="mb-12">
+        <h2 class="text-lg font-semibold mb-6">Typography</h2>
+        <div class="token-card mb-4">
+          <div class="flex justify-between items-baseline mb-2">
+            <span class="text-boring-text-secondary text-xs">--font-sans</span>
+            <span class="text-boring-text-secondary text-xs">Headings & UI</span>
+          </div>
+          <div class="text-boring-text font-sans text-lg">Inter, system-ui, sans-serif</div>
+        </div>
+        <div class="token-card mb-4">
+          <div class="flex justify-between items-baseline mb-2">
+            <span class="text-boring-text-secondary text-xs">--font-mono</span>
+            <span class="text-boring-text-secondary text-xs">Code & Data</span>
+          </div>
+          <div class="text-boring-text font-mono text-lg">JetBrains Mono, monospace</div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--text-hero (48px / bold / -0.02em)</div>
+            <div class="text-4xl md:text-5xl font-bold tracking-tight">Hero Title</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--text-section (14px / medium / 0.08em uppercase)</div>
+            <div class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary">Section Label</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--text-body (14px / normal / 1.6)</div>
+            <div class="text-sm leading-relaxed text-boring-text-secondary">Body copy with comfortable line height for reading technical documentation and feature descriptions.</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--text-stat (36px / bold / -0.01em)</div>
+            <div class="text-4xl font-bold">~3 ms</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spacing Tokens -->
+      <div class="mb-12">
+        <h2 class="text-lg font-semibold mb-6">Spacing</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-xs (4px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 4px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-sm (8px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 8px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-md (16px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 16px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-lg (24px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 24px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-xl (32px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 32px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-2xl (48px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 48px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-3xl (64px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 64px;"></div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-2">--space-4xl (80px)</div>
+            <div class="h-1 bg-boring-accent rounded" style="width: 80px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elevation & Radius -->
+      <div class="mb-12">
+        <h2 class="text-lg font-semibold mb-6">Elevation & Radius</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-3">--radius-sm (6px)</div>
+            <div class="bg-boring-surface-elevated border border-boring-border h-16 rounded-md flex items-center justify-center text-xs text-boring-text-muted">6px</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-3">--radius-md (12px)</div>
+            <div class="bg-boring-surface-elevated border border-boring-border h-16 rounded-xl flex items-center justify-center text-xs text-boring-text-muted">12px</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-3">--radius-pill (999px)</div>
+            <div class="bg-boring-surface-elevated border border-boring-border h-16 rounded-full flex items-center justify-center text-xs text-boring-text-muted">pill</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shadows -->
+      <div>
+        <h2 class="text-lg font-semibold mb-6">Shadows</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-3">--shadow-sm</div>
+            <div class="bg-boring-surface-elevated h-16 rounded-xl shadow-sm flex items-center justify-center text-xs text-boring-text-muted">0 1px 2px 0 rgb(0 0 0 / 0.05)</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-3">--shadow-md</div>
+            <div class="bg-boring-surface-elevated h-16 rounded-xl shadow-md flex items-center justify-center text-xs text-boring-text-muted">0 4px 6px -1px rgb(0 0 0 / 0.1)</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-3">--shadow-glow</div>
+            <div class="bg-boring-accent/10 border border-boring-accent/20 h-16 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.15)] flex items-center justify-center text-xs text-boring-accent">Green glow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENTS SECTION -->
+    <section id="components" class="ds-section">
+      <div class="ds-label">Components</div>
+
+      <!-- Button Group -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Buttons</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-4">Primary Button</div>
+            <div class="flex items-center gap-4">
+              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
+                Fork on GitHub
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </button>
+            </div>
+            <div class="mt-4 text-xs text-boring-text-muted font-mono">bg: #FAFAFA, text: #000, radius: 6px, font: mono 14px medium</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-4">Secondary / Ghost Button</div>
+            <div class="flex items-center gap-4">
+              <button class="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-boring-border text-boring-text-secondary font-mono text-sm rounded-md hover:border-boring-text-secondary hover:text-boring-text transition-colors">
+                Read the docs
+              </button>
+            </div>
+            <div class="mt-4 text-xs text-boring-text-muted font-mono">bg: transparent, border: #27272A, text: #A1A1AA</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-4">Link Button</div>
+            <div class="flex items-center gap-4">
+              <button class="inline-flex items-center gap-1 text-boring-text-secondary font-mono text-sm hover:text-boring-text transition-colors group">
+                setup & API docs
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="group-hover:translate-x-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </button>
+            </div>
+            <div class="mt-4 text-xs text-boring-text-muted font-mono">no bg/border, text only with arrow</div>
+          </div>
+          <div class="token-card">
+            <div class="text-boring-text-secondary text-xs mb-4">Nav Link</div>
+            <div class="flex items-center gap-4">
+              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
+            </div>
+            <div class="mt-4 text-xs text-boring-text-muted font-mono">font: sans 14px, color: #A1A1AA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Cards</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="token-card p-0 overflow-hidden">
+            <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Feature Card (Grid Cell)</div>
+            <div class="p-6">
+              <h3 class="text-boring-text font-medium mb-2">Sandboxes</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Headless microVMs with a serial console + an AI that drives them. python3 · node · claude, milliseconds to boot, opt-in internet.</p>
+            </div>
+            <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">border: 1px solid #27272A, padding: 24px</div>
+          </div>
+          <div class="token-card p-0 overflow-hidden">
+            <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">CTA Card</div>
+            <div class="p-6">
+              <h3 class="text-boring-text font-medium mb-2">Run your own</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed mb-4">It's open source (Apache-2.0) and self-hosted — bring your own Anthropic + S3 keys, point it at a Linux box with /dev/kvm, or run the whole thing on an Apple Silicon Mac with one command.</p>
+              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
+                Fork on GitHub
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </button>
+              <span class="ml-3 inline-flex items-center gap-1 text-boring-text-secondary font-mono text-sm hover:text-boring-text transition-colors cursor-pointer group">
+                setup & API docs
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="group-hover:translate-x-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </span>
+            </div>
+            <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">bg: #18181B, radius: 12px, border: 1px solid #27272A</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Showcase -->
+      <div id="project-showcase" class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Project Showcase</h2>
+        <section class="project-showcase-grid">
+          <div class="project-showcase-copy">
+            <p class="font-mono text-xs uppercase tracking-widest text-boring-text-muted mb-4">PROJECT SHOWCASE</p>
+            <h3 id="project-showcase-title" class="text-2xl md:text-4xl font-semibold tracking-tight text-boring-text mb-4">Satu section untuk menampilkan karya utama.</h3>
+            <p class="max-w-xl text-base md:text-lg leading-relaxed text-boring-text-secondary">
+              Gambar komponen diambil dari satu folder yang sama. Tambahkan file baru ke folder tersebut, lalu render sebagai background image di area visual.
+            </p>
+          </div>
+          <div
+            class="project-showcase-visual"
+            style="background-image: url('assets/project-showcase/mceasy-homepage.png'); background-size: cover; background-position: center top;"
+            aria-label="McEasy homepage preview"
+          ></div>
+        </section>
+      </div>
+
+      <!-- Terminal / Code Block -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Terminal</h2>
+        <div class="token-card p-0 overflow-hidden">
+          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Computer Frame Component</div>
+          <div class="p-6">
+            <div class="computer-frame max-w-lg mx-auto">
+              <div class="computer-screen">
+                <div class="font-mono text-xs md:text-sm leading-relaxed space-y-1">
+                  <div class="text-boring-text-secondary">$ git clone github.com/michaelsimoes/boring-computers</div>
+                  <div class="text-boring-text-secondary">$ cd boring-computers && npm install</div>
+                  <div class="text-boring-text-secondary"># add your keys, then run boringd on a KVM box — or your Mac</div>
+                  <div class="text-boring-text-secondary">$ ./boringd</div>
+                  <div class="text-boring-accent mt-2">boring computers · a computer is one HTTP call away</div>
+                  <div class="text-boring-text-secondary mt-2">$ curl -XPOST $BORING/v1/machines -d '{"template":"desktop"}'</div>
+                  <div class="text-boring-text-secondary">→ {"id":"m-1a2b3c4d","mode":"warm","boot_ms":0}<span class="cursor-blink text-boring-accent">▌</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-3 px-1">
+                <span class="computer-brand">boring. classic</span>
+                <div class="flex items-center gap-2">
+                  <div class="w-24 h-1 bg-boring-border rounded-full"></div>
+                  <div class="computer-indicator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">bg: #E8E4DC, screen: #0D0D0D, indicator: #22C55E</div>
+        </div>
+      </div>
+
+      <!-- Data Grid -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Data Grid</h2>
+        <div class="token-card p-0 overflow-hidden">
+          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Feature Grid (Table Layout)</div>
+          <div class="p-6">
+            <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-6">THE LINEUP</p>
+            <div class="grid-table grid-table-3">
+              <div class="grid-cell">
+                <h3 class="text-boring-text font-medium mb-2">Sandboxes</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Headless microVMs with a serial console + an AI that drives them.</p>
+              </div>
+              <div class="grid-cell">
+                <h3 class="text-boring-text font-medium mb-2">Computers</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Full Linux desktops over VNC — a real browser plus claude, codex, cursor & pi preinstalled.</p>
+              </div>
+              <div class="grid-cell">
+                <h3 class="text-boring-text font-medium mb-2">Agents</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">An AI that sees the screen and drives the mouse & keyboard.</p>
+              </div>
+              <div class="grid-cell">
+                <h3 class="text-boring-text font-medium mb-2">Inference</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">One OpenAI-compatible endpoint for every model — Claude on Anthropic, the rest via OpenRouter.</p>
+              </div>
+              <div class="grid-cell">
+                <h3 class="text-boring-text font-medium mb-2">Storage</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Persistent volumes that outlive the machine — save a computer, restore it into a fresh one.</p>
+              </div>
+              <div class="grid-cell">
+                <h3 class="text-boring-text font-medium mb-2">& More</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Network, snapshots, templates, and everything else you'd expect.</p>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">grid: 3-col, border: 1px solid #27272A, gap: 0 (border-collapse style)</div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Stats</h2>
+        <div class="token-card p-0 overflow-hidden">
+          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Stats Row</div>
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <div class="text-4xl font-bold text-boring-text mb-2">~3 ms</div>
+                <div class="text-sm font-mono text-boring-text-secondary">snapshot boot</div>
+              </div>
+              <div>
+                <div class="text-4xl font-bold text-boring-text mb-2">VM-grade</div>
+                <div class="text-sm font-mono text-boring-text-secondary">isolation, per machine</div>
+              </div>
+              <div>
+                <div class="text-4xl font-bold text-boring-text mb-2">Apache-2.0</div>
+                <div class="text-sm font-mono text-boring-text-secondary">open source, self-hostable</div>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">text: 36px bold, label: 14px mono secondary</div>
+        </div>
+      </div>
+
+      <!-- Feature List -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Feature List</h2>
+        <div class="token-card p-0 overflow-hidden">
+          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">How It Works Grid</div>
+          <div class="p-6">
+            <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-8">HOW IT WORKS</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              <div>
+                <h3 class="text-boring-text font-medium mb-2">Firecracker microVMs</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Real hardware-virtualized isolation — a kernel per machine, not a shared container.</p>
+              </div>
+              <div>
+                <h3 class="text-boring-text font-medium mb-2">Jailed & capped</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Each VM runs unprivileged and chrooted, with per-machine CPU, memory and PID limits.</p>
+              </div>
+              <div>
+                <h3 class="text-boring-text font-medium mb-2">Snapshot-restore</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">A shell resumes from a memory snapshot in ~3 ms. No cold boot, no waiting.</p>
+              </div>
+              <div>
+                <h3 class="text-boring-text font-medium mb-2">Ephemeral by default</h3>
+                <p class="text-sm text-boring-text-secondary leading-relaxed">Machines clean themselves up on a TTL — nothing lingers. Or flip "keep alive" and one runs until you stop it.</p>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">2-col grid, gap-x: 48px, gap-y: 32px</div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="mb-16">
+        <h2 class="text-lg font-semibold mb-6">Navigation</h2>
+        <div class="token-card p-0 overflow-hidden">
+          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Site Header</div>
+          <div class="p-6">
+            <nav class="flex items-center justify-between">
+              <a href="#" class="font-mono text-sm font-semibold text-boring-text">boring.</a>
+              <div class="flex items-center gap-6">
+                <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
+                <a href="#" target="_blank" class="text-boring-text-secondary hover:text-boring-text transition-colors">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                </a>
+              </div>
+            </nav>
+          </div>
+          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">height: 64px, container: max-w-5xl, logo: mono 14px semibold</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div>
+        <h2 class="text-lg font-semibold mb-6">Footer</h2>
+        <div class="token-card p-0 overflow-hidden">
+          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Site Footer</div>
+          <div class="p-6">
+            <footer class="flex items-center justify-between py-6 border-t border-boring-border">
+              <div>
+                <div class="font-mono text-sm font-semibold text-boring-text mb-1">boring computers</div>
+                <div class="font-mono text-xs text-boring-text-muted">Computers that are refreshingly boring.</div>
+              </div>
+              <div class="flex items-center gap-6">
+                <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
+                <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">GitHub</a>
+              </div>
+            </footer>
+          </div>
+          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">border-top: 1px solid #27272A, flex between</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE PREVIEW SECTION -->
+    <section id="preview">
+      <div class="ds-label">Live Preview</div>
+      <p class="text-boring-text-secondary text-sm mb-8">Full landing page recreation using the design system tokens and components above.</p>
+      
+      <div class="border border-boring-border rounded-xl overflow-hidden bg-boring-bg">
+        <!-- Preview: Hero -->
+        <div class="px-6 md:px-12 pt-8 pb-12">
+          <nav class="flex items-center justify-between mb-16">
+            <a href="#" class="font-mono text-sm font-semibold text-boring-text">boring.</a>
+            <div class="flex items-center gap-6">
+              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
+              <a href="https://github.com" target="_blank" class="text-boring-text-secondary hover:text-boring-text transition-colors">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </a>
+            </div>
+          </nav>
+          
+          <div class="max-w-2xl">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">Computers that are <span class="text-boring-text-secondary">refreshingly boring.</span></h1>
+            <p class="text-boring-text-secondary leading-relaxed mb-6">
+              Instant Firecracker microVMs — a terminal, a real browser, coding agents preinstalled, and an AI that drives them. <span class="text-boring-text font-medium">Open source.</span> Fork it and run your own with your own keys.
+            </p>
+            <div class="flex items-center gap-3 mb-12">
+              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
+                Fork on GitHub
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </button>
+              <button class="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-boring-border text-boring-text-secondary font-mono text-sm rounded-md hover:border-boring-text-secondary hover:text-boring-text transition-colors">
+                Read the docs
+              </button>
+            </div>
+          </div>
+          
+          <div class="computer-frame max-w-2xl">
+            <div class="computer-screen">
+              <div class="font-mono text-xs md:text-sm leading-relaxed space-y-1">
+                <div class="text-boring-text-secondary">$ git clone github.com/michaelsimoes/boring-computers</div>
+                <div class="text-boring-text-secondary">$ cd boring-computers && npm install</div>
+                <div class="text-boring-text-secondary"># add your keys, then run boringd on a KVM box — or your Mac</div>
+                <div class="text-boring-text-secondary">$ ./boringd</div>
+                <div class="text-boring-accent mt-2">boring computers · a computer is one HTTP call away</div>
+                <div class="text-boring-text-secondary mt-2">$ curl -XPOST $BORING/v1/machines -d '{"template":"desktop"}'</div>
+                <div class="text-boring-text-secondary">→ {"id":"m-1a2b3c4d","mode":"warm","boot_ms":0}<span class="cursor-blink text-boring-accent">▌</span></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 px-1">
+              <span class="computer-brand">boring. classic</span>
+              <div class="flex items-center gap-2">
+                <div class="w-24 h-1 bg-boring-border rounded-full"></div>
+                <div class="computer-indicator"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview: The Lineup -->
+        <div class="px-6 md:px-12 py-16">
+          <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-6">THE LINEUP</p>
+          <div class="grid-table grid-table-3">
+            <div class="grid-cell">
+              <h3 class="text-boring-text font-medium mb-2">Sandboxes</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Headless microVMs with a serial console + an AI that drives them. python3 · node · claude, milliseconds to boot, opt-in internet.</p>
+            </div>
+            <div class="grid-cell">
+              <h3 class="text-boring-text font-medium mb-2">Computers</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Full Linux desktops over VNC — a real browser plus claude, codex, cursor & pi preinstalled.</p>
+            </div>
+            <div class="grid-cell">
+              <h3 class="text-boring-text font-medium mb-2">Agents</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">An AI that sees the screen and drives the mouse & keyboard.</p>
+            </div>
+            <div class="grid-cell">
+              <h3 class="text-boring-text font-medium mb-2">Inference</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">One OpenAI-compatible endpoint for every model — Claude on Anthropic, the rest via OpenRouter.</p>
+            </div>
+            <div class="grid-cell">
+              <h3 class="text-boring-text font-medium mb-2">Storage</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Persistent volumes that outlive the machine — save a computer, restore it into a fresh one.</p>
+            </div>
+            <div class="grid-cell bg-boring-surface/50">
+              <!-- empty cell to match image layout -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview: How It Works -->
+        <div class="px-6 md:px-12 py-16">
+          <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-8">HOW IT WORKS</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h3 class="text-boring-text font-medium mb-2">Firecracker microVMs</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Real hardware-virtualized isolation — a kernel per machine, not a shared container.</p>
+            </div>
+            <div>
+              <h3 class="text-boring-text font-medium mb-2">Jailed & capped</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Each VM runs unprivileged and chrooted, with per-machine CPU, memory and PID limits.</p>
+            </div>
+            <div>
+              <h3 class="text-boring-text font-medium mb-2">Snapshot-restore</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">A shell resumes from a memory snapshot in ~3 ms. No cold boot, no waiting.</p>
+            </div>
+            <div>
+              <h3 class="text-boring-text font-medium mb-2">Ephemeral by default</h3>
+              <p class="text-sm text-boring-text-secondary leading-relaxed">Machines clean themselves up on a TTL — nothing lingers. Or flip "keep alive" and one runs until you stop it.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview: Stats -->
+        <div class="px-6 md:px-12 py-16">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <div class="text-4xl font-bold text-boring-text mb-2">~3 ms</div>
+              <div class="text-sm font-mono text-boring-text-secondary">snapshot boot</div>
+            </div>
+            <div>
+              <div class="text-4xl font-bold text-boring-text mb-2">VM-grade</div>
+              <div class="text-sm font-mono text-boring-text-secondary">isolation, per machine</div>
+            </div>
+            <div>
+              <div class="text-4xl font-bold text-boring-text mb-2">Apache-2.0</div>
+              <div class="text-sm font-mono text-boring-text-secondary">open source, self-hostable</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview: CTA Card -->
+        <div class="px-6 md:px-12 py-16">
+          <div class="bg-boring-surface-elevated border border-boring-border rounded-xl p-8 md:p-10">
+            <h3 class="text-boring-text font-medium text-lg mb-2">Run your own</h3>
+            <p class="text-sm text-boring-text-secondary leading-relaxed max-w-2xl mb-6">
+              It's open source (Apache-2.0) and self-hosted — bring your own Anthropic + S3 keys, point it at a Linux box with <code class="font-mono text-boring-text">/dev/kvm</code> (x86_64 or arm64), or run the whole thing on an Apple Silicon Mac with one command. Nothing phones home.
+            </p>
+            <div class="flex items-center gap-4">
+              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
+                Fork on GitHub
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </button>
+              <a href="#" class="inline-flex items-center gap-1 text-boring-text-secondary font-mono text-sm hover:text-boring-text transition-colors group">
+                setup & API docs
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="group-hover:translate-x-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview: Footer -->
+        <div class="px-6 md:px-12 py-8">
+          <footer class="flex flex-col md:flex-row items-start md:items-center justify-between pt-8 border-t border-boring-border">
+            <div>
+              <div class="font-mono text-sm font-semibold text-boring-text mb-1">boring computers</div>
+              <div class="font-mono text-xs text-boring-text-muted">Computers that are refreshingly boring.</div>
+            </div>
+            <div class="flex items-center gap-6 mt-4 md:mt-0">
+              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
+              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">GitHub</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Back to top -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 p-3 bg-boring-surface-elevated border border-boring-border rounded-lg text-boring-text-secondary hover:text-boring-text hover:border-boring-text-secondary transition-colors shadow-lg" aria-label="Back to top">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+</body>
+</html>
