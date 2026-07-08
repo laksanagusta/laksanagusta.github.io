@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dika Laksana</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon-rounded-4463.svg?v=3">
+  <link rel="shortcut icon" type="image/svg+xml" href="assets/favicon-rounded-4463.svg?v=3">
+  <link rel="apple-touch-icon" href="assets/favicon-img-4463.jpg?v=3">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            boring: {
+              bg: '#000000',
+              surface: '#09090B',
+              'surface-elevated': '#18181B',
+              border: '#27272A',
+              'border-subtle': '#3F3F46',
+              text: '#FAFAFA',
+              'text-secondary': '#A1A1AA',
+              'text-muted': '#71717A',
+              accent: '#22C55E',
+              'accent-dim': '#166534',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+      body {
+        @apply bg-boring-bg text-boring-text font-sans antialiased;
+      }
+      code, pre {
+        @apply font-mono;
+      }
+    }
+    @layer components {
+      .page-shell {
+        @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8;
+      }
+      .section-anchor {
+        scroll-margin-top: 2rem;
+      }
+      .topbar {
+        @apply sticky top-0 z-50 border-b border-boring-border bg-boring-bg/90 backdrop-blur;
+      }
+      .nav-link {
+        @apply text-sm text-boring-text-secondary;
+      }
+      .nav-icon {
+        @apply inline-flex h-8 w-8 items-center justify-center rounded-md border border-boring-border text-boring-text-secondary;
+      }
+      .mobile-nav {
+        @apply relative md:hidden;
+      }
+      .mobile-nav summary {
+        @apply inline-flex cursor-pointer list-none items-center justify-center rounded-md border border-boring-border text-boring-text-secondary;
+      }
+      .mobile-nav summary::-webkit-details-marker {
+        display: none;
+      }
+      .mobile-nav summary svg {
+        @apply h-4 w-4;
+      }
+      .mobile-nav[open] summary {
+        @apply border-boring-border-subtle text-boring-text;
+      }
+      .mobile-nav-menu {
+        @apply absolute right-0 top-full z-50 mt-3 w-52 overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated p-2 shadow-[0_18px_60px_-28px_rgba(250,250,250,0.45),0_12px_34px_-24px_rgba(0,0,0,0.95)];
+      }
+      .mobile-nav-link {
+        @apply flex items-center justify-between rounded-md px-3 py-2 text-sm text-boring-text-secondary;
+      }
+      .mobile-nav-link svg {
+        @apply h-4 w-4;
+      }
+      .section-label {
+        @apply mb-4 font-mono text-xs uppercase tracking-widest text-boring-text-muted;
+      }
+      .section-heading {
+        @apply text-2xl font-semibold tracking-tight text-boring-text md:text-3xl;
+      }
+      .contact-popover {
+        @apply relative inline-block;
+      }
+      .contact-popover summary {
+        @apply inline-flex cursor-pointer list-none rounded-md bg-boring-text px-4 py-2 font-mono text-sm font-medium text-boring-bg;
+      }
+      .contact-popover summary::-webkit-details-marker {
+        display: none;
+      }
+      .contact-menu {
+        @apply absolute left-0 top-full z-20 mt-3 min-w-56 overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated p-2 shadow-[0_18px_60px_-28px_rgba(250,250,250,0.45),0_12px_34px_-24px_rgba(0,0,0,0.95)];
+      }
+      .contact-option {
+        @apply block rounded-md px-3 py-2 font-mono text-sm text-boring-text-secondary;
+      }
+      .secondary-cta {
+        @apply inline-flex items-center justify-center rounded-md border border-boring-border px-4 py-2 font-mono text-sm text-boring-text-secondary;
+      }
+      .project-showcase-layout {
+        @apply grid gap-4 md:grid-cols-2;
+      }
+      .project-showcase-tile {
+        @apply block overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated;
+      }
+      .project-showcase-media {
+        @apply border-b border-boring-border bg-boring-bg p-5;
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62)), url('assets/project-showcase/ascii-magic-2.png');
+        background-position: center;
+        background-size: cover;
+      }
+      .project-showcase-media.ascii-3 {
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62)), url('assets/project-showcase/ascii-magic-3.png');
+      }
+      .project-showcase-media.ascii-4 {
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62)), url('assets/project-showcase/ascii-magic-4.png');
+      }
+      .project-showcase-image-wrap {
+        @apply aspect-[16/10] overflow-hidden rounded-md border border-boring-border bg-boring-bg shadow-[0_24px_70px_-34px_rgba(34,197,94,0.45),0_16px_44px_-28px_rgba(245,90,54,0.38),0_12px_30px_-18px_rgba(0,0,0,0.9)];
+      }
+      .project-showcase-image {
+        @apply h-full w-full rounded-md object-cover object-top;
+      }
+      .project-showcase-body {
+        @apply p-6;
+      }
+      .project-showcase-meta {
+        @apply mb-3 flex items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest text-boring-text-muted;
+      }
+      .project-showcase-badge-group {
+        @apply flex flex-wrap items-center justify-end gap-1.5;
+      }
+      .project-showcase-title {
+        @apply text-base font-medium text-boring-text;
+      }
+      .project-showcase-copy {
+        @apply mt-2 max-w-[58ch] text-sm leading-relaxed text-boring-text-secondary;
+      }
+      .project-showcase-tag {
+        @apply rounded-md border border-boring-border px-2 py-1 text-[10px] text-boring-text-secondary;
+      }
+      .tool-stack-card {
+        @apply overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated;
+      }
+      .tool-stack-grid {
+        @apply grid grid-cols-1 divide-y divide-boring-border md:grid-cols-5 md:divide-y-0 md:divide-x;
+      }
+      .tool-stack-item {
+        @apply flex min-h-40 flex-col gap-5 p-6 md:p-7;
+      }
+      .tool-stack-mark {
+        @apply inline-flex h-14 w-14 items-center justify-center rounded-xl border border-boring-border bg-[#050505] p-2 text-boring-text shadow-[0_14px_30px_-20px_rgba(0,0,0,0.9)];
+      }
+      .tool-stack-mark img,
+      .tool-stack-mark svg {
+        @apply h-full w-full object-contain;
+      }
+      .tool-stack-theme-light {
+        display: none;
+      }
+      .tool-stack-name {
+        @apply font-mono text-sm font-medium text-boring-text;
+      }
+      .experience-list {
+        @apply space-y-12;
+      }
+      .experience-row {
+        @apply grid gap-6 md:grid-cols-[1fr_180px] md:items-start;
+      }
+      .experience-role {
+        @apply text-base font-medium tracking-tight text-boring-text;
+      }
+      .experience-company {
+        @apply mt-1 text-base text-boring-text;
+      }
+      .experience-meta {
+        @apply mt-1 text-sm leading-relaxed text-boring-text-muted;
+      }
+      .experience-brand {
+        @apply font-mono text-xs font-semibold uppercase tracking-widest text-boring-text-secondary md:text-right;
+      }
+      .experience-brand-mark {
+        @apply inline-flex min-h-12 items-center justify-start rounded-md border border-boring-border px-4 py-3 md:justify-center;
+      }
+      .experience-brand-mark.active {
+        @apply border-boring-accent/60 bg-boring-accent/10 text-boring-accent shadow-[0_0_20px_rgba(34,197,94,0.12)];
+      }
+      .social-link {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-boring-border text-boring-text-secondary;
+      }
+      .social-link svg {
+        @apply h-4 w-4;
+      }
+    }
+  </style>
+  <style>
+    html[data-theme="light"] body {
+      background-color: #FAFAFA;
+      color: #18181B;
+    }
+    html[data-theme="light"] .bg-boring-bg {
+      background-color: #FAFAFA;
+    }
+    html[data-theme="light"] .bg-boring-surface {
+      background-color: #F4F4F5;
+    }
+    html[data-theme="light"] .bg-boring-surface-elevated {
+      background-color: #FFFFFF;
+    }
+    html[data-theme="light"] .bg-boring-text {
+      background-color: #18181B;
+    }
+    html[data-theme="light"] .bg-boring-accent {
+      background-color: #16A34A;
+    }
+    html[data-theme="light"] .bg-boring-accent-dim {
+      background-color: #DCFCE7;
+    }
+    html[data-theme="light"] .text-boring-text {
+      color: #18181B;
+    }
+    html[data-theme="light"] .text-boring-text-secondary {
+      color: #52525B;
+    }
+    html[data-theme="light"] .text-boring-text-muted {
+      color: #71717A;
+    }
+    html[data-theme="light"] .text-boring-bg {
+      color: #FAFAFA;
+    }
+    html[data-theme="light"] .text-boring-accent {
+      color: #16A34A;
+    }
+    html[data-theme="light"] .border-boring-border {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .border-boring-border-subtle {
+      border-color: #D4D4D8;
+    }
+    html[data-theme="light"] .border-boring-accent {
+      border-color: #16A34A;
+    }
+    html[data-theme="light"] .topbar {
+      border-color: #E4E4E7;
+      background-color: rgba(250, 250, 250, 0.9);
+    }
+    html[data-theme="light"] .nav-link,
+    html[data-theme="light"] .nav-icon,
+    html[data-theme="light"] .mobile-nav summary,
+    html[data-theme="light"] .mobile-nav-link,
+    html[data-theme="light"] .contact-option,
+    html[data-theme="light"] .secondary-cta,
+    html[data-theme="light"] .social-link,
+    html[data-theme="light"] .experience-brand {
+      color: #52525B;
+      border-color: #D4D4D8;
+    }
+    html[data-theme="light"] .mobile-nav-menu,
+    html[data-theme="light"] .contact-menu {
+      background-color: #FFFFFF;
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .mobile-nav-link:hover,
+    html[data-theme="light"] .contact-option:hover {
+      background-color: #F4F4F5;
+      color: #18181B;
+    }
+    html[data-theme="light"] .contact-popover summary {
+      background-color: #18181B;
+      color: #FAFAFA;
+    }
+    html[data-theme="light"] .project-showcase-tile {
+      background-color: #FFFFFF;
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .section-label {
+      color: #71717A;
+    }
+    html[data-theme="light"] .section-heading,
+    html[data-theme="light"] .project-showcase-title,
+    html[data-theme="light"] .experience-role,
+    html[data-theme="light"] .experience-company,
+    html[data-theme="light"] .experience-brand-mark {
+      color: #18181B;
+    }
+    html[data-theme="light"] .project-showcase-copy,
+    html[data-theme="light"] .experience-meta,
+    html[data-theme="light"] .project-showcase-tag {
+      color: #52525B;
+    }
+    html[data-theme="light"] .project-showcase-meta {
+      color: #71717A;
+    }
+    html[data-theme="light"] .project-showcase-media {
+      background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.18), rgba(250, 250, 250, 0.48)), url('assets/project-showcase/ascii-magic-2.png');
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .project-showcase-media.ascii-3 {
+      background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.18), rgba(250, 250, 250, 0.48)), url('assets/project-showcase/ascii-magic-3.png');
+    }
+    html[data-theme="light"] .project-showcase-media.ascii-4 {
+      background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.18), rgba(250, 250, 250, 0.48)), url('assets/project-showcase/ascii-magic-4.png');
+    }
+    html[data-theme="light"] .project-showcase-body {
+      background-color: #FFFFFF;
+    }
+    html[data-theme="light"] .project-showcase-tag {
+      border-color: #D4D4D8;
+      background-color: #FAFAFA;
+    }
+    html[data-theme="light"] .tool-stack-card {
+      background-color: #FFFFFF;
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .tool-stack-grid {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .tool-stack-item {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .tool-stack-mark {
+      background-color: #18181B;
+      border-color: #D4D4D8;
+      color: #FAFAFA;
+    }
+    html[data-theme="light"] .tool-stack-name {
+      color: #18181B;
+    }
+    html[data-theme="light"] .tool-stack-theme-dark {
+      display: none;
+    }
+    html[data-theme="light"] .tool-stack-theme-light {
+      display: block;
+    }
+    html[data-theme="light"] .experience-brand-mark.active {
+      background-color: #DCFCE7;
+      border-color: rgba(22, 163, 74, 0.25);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.12);
+    }
+    html[data-theme="light"] footer {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] ::-webkit-scrollbar-track {
+      background: #FAFAFA;
+    }
+    html[data-theme="light"] ::-webkit-scrollbar-thumb {
+      background: #D4D4D8;
+    }
+    html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+      background: #A1A1AA;
+    }
+    [data-theme-toggle] .theme-icon-dark {
+      display: none;
+    }
+    html[data-theme="light"] [data-theme-toggle] .theme-icon-dark {
+      display: inline-block;
+    }
+    html[data-theme="light"] [data-theme-toggle] .theme-icon-light {
+      display: none;
+    }
+    :root {
+      --motion-ease: cubic-bezier(0.23, 1, 0.32, 1);
+      --motion-ease-emphasized: cubic-bezier(0.23, 1, 0.32, 1);
+      --motion-ease-settle: cubic-bezier(0.77, 0, 0.175, 1);
+      --motion-quick: 120ms;
+      --motion-standard: 180ms;
+      --motion-slow: 420ms;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .topbar {
+        animation: topbar-enter var(--motion-slow) var(--motion-ease-emphasized) both;
+      }
+      main > section:first-child .section-label,
+      main > section:first-child h1,
+      main > section:first-child p:not(.section-label),
+      main > section:first-child .contact-popover,
+      main > section:first-child .secondary-cta {
+        animation: hero-rise var(--motion-slow) var(--motion-ease-emphasized) both;
+      }
+      main > section:first-child .section-label {
+        animation-delay: 70ms;
+      }
+      main > section:first-child h1 {
+        animation-delay: 130ms;
+      }
+      main > section:first-child p:not(.section-label) {
+        animation-delay: 190ms;
+      }
+      main > section:first-child .contact-popover,
+      main > section:first-child .secondary-cta {
+        animation-delay: 250ms;
+      }
+      .mobile-nav[open] .mobile-nav-menu,
+      .contact-popover[open] .contact-menu {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        transform-origin: top right;
+        transition: opacity 160ms var(--motion-ease), transform 160ms var(--motion-ease);
+        @starting-style {
+          opacity: 0;
+          transform: translate3d(0, -4px, 0) scale(0.98);
+        }
+      }
+      .contact-popover[open] .contact-menu {
+        transform-origin: top left;
+      }
+      .motion-reveal {
+        opacity: 0;
+        transform: translate3d(0, 10px, 0);
+        transition: opacity 260ms var(--motion-ease), transform 260ms var(--motion-ease);
+        transition-delay: var(--motion-delay, 0ms);
+      }
+      .motion-reveal.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+      .project-showcase-image,
+      .project-showcase-media,
+      .project-showcase-tag,
+      .experience-brand-mark,
+      .theme-icon-light,
+      .theme-icon-dark {
+        transition-duration: var(--motion-standard);
+        transition-timing-function: var(--motion-ease);
+      }
+      .theme-icon-light,
+      .theme-icon-dark {
+        transition-property: opacity, transform;
+      }
+      .theme-toggle-flash .theme-icon-light,
+      .theme-toggle-flash .theme-icon-dark {
+        transform: rotate(-16deg) scale(0.92);
+      }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .nav-link {
+        transition: color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .nav-link:hover {
+        color: #FAFAFA;
+        transform: translateY(-1px);
+      }
+      .nav-icon,
+      .mobile-nav summary,
+      .social-link {
+        transition: border-color var(--motion-quick) var(--motion-ease), color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .nav-icon:hover,
+      .mobile-nav summary:hover,
+      .social-link:hover {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+        transform: translateY(-1px);
+      }
+      .mobile-nav-link,
+      .contact-option {
+        transition: background-color var(--motion-quick) var(--motion-ease), color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .mobile-nav-link:hover,
+      .contact-option:hover {
+        background-color: #09090B;
+        color: #FAFAFA;
+        transform: translateX(2px);
+      }
+      .contact-popover summary {
+        transition: background-color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .contact-popover summary:hover {
+        background-color: #A1A1AA;
+        transform: translateY(-1px);
+      }
+      .contact-popover summary:active,
+      .secondary-cta:active,
+      .nav-icon:active,
+      .social-link:active {
+        transform: translateY(0) scale(0.98);
+        transition-duration: 80ms;
+      }
+      .secondary-cta {
+        transition: border-color var(--motion-quick) var(--motion-ease), color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .secondary-cta:hover {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+        transform: translateY(-1px);
+      }
+      .project-showcase-tile {
+        transition: border-color var(--motion-standard) var(--motion-ease), transform var(--motion-standard) var(--motion-ease);
+      }
+      .project-showcase-tile:hover {
+        border-color: #3F3F46;
+        transform: translateY(-3px);
+      }
+      .project-showcase-tile:hover .project-showcase-media {
+        background-position: center 46%;
+      }
+      .project-showcase-tile:hover .project-showcase-image {
+        transform: scale(1.025);
+      }
+      .project-showcase-tile:hover .project-showcase-tag {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+      }
+      .tool-stack-item {
+        transition: transform var(--motion-standard) var(--motion-ease), background-color var(--motion-standard) var(--motion-ease);
+      }
+      .tool-stack-item:hover {
+        transform: translateY(-2px);
+      }
+      .tool-stack-item:hover .tool-stack-mark {
+        border-color: #3F3F46;
+      }
+      .experience-row {
+        transition: transform var(--motion-standard) var(--motion-ease);
+      }
+      .experience-row:hover {
+        transform: translateX(3px);
+      }
+      .experience-row:hover .experience-brand-mark {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+      }
+      html[data-theme="light"] .nav-link:hover,
+      html[data-theme="light"] .nav-icon:hover,
+      html[data-theme="light"] .mobile-nav summary:hover,
+      html[data-theme="light"] .social-link:hover,
+      html[data-theme="light"] .secondary-cta:hover,
+      html[data-theme="light"] .project-showcase-tile:hover .project-showcase-tag,
+      html[data-theme="light"] .experience-row:hover .experience-brand-mark {
+        border-color: #A1A1AA;
+        color: #18181B;
+      }
+      html[data-theme="light"] .mobile-nav-link:hover,
+      html[data-theme="light"] .contact-option:hover {
+        background-color: #F4F4F5;
+        color: #18181B;
+      }
+      html[data-theme="light"] .project-showcase-tile:hover {
+        border-color: #A1A1AA;
+      }
+      html[data-theme="light"] .tool-stack-item:hover .tool-stack-mark {
+        border-color: #A1A1AA;
+      }
+    }
+    @keyframes topbar-enter {
+      from {
+        opacity: 0;
+        transform: translate3d(0, -10px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    @keyframes hero-rise {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      .topbar,
+      main > section:first-child .section-label,
+      main > section:first-child h1,
+      main > section:first-child p:not(.section-label),
+      main > section:first-child .contact-popover,
+      main > section:first-child .secondary-cta {
+        animation: none;
+      }
+      .motion-reveal,
+      .motion-reveal.is-visible,
+      .mobile-nav[open] .mobile-nav-menu,
+      .contact-popover[open] .contact-menu {
+        opacity: 1;
+        transform: none;
+        transition-property: opacity, color, background-color, border-color;
+      }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3F3F46; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="page-shell flex h-16 items-center justify-between">
+      <a href="#" class="font-mono text-sm font-semibold tracking-tight text-boring-text">@dikalaksana_</a>
+      <div class="hidden items-center gap-6 md:flex">
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#experience">Experience</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <button class="nav-icon" type="button" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
+          <svg class="theme-icon-light" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <path d="M12 2.75v2.5"></path>
+            <path d="M12 18.75v2.5"></path>
+            <path d="M4.7 4.7l1.77 1.77"></path>
+            <path d="M17.53 17.53l1.77 1.77"></path>
+            <path d="M2.75 12h2.5"></path>
+            <path d="M18.75 12h2.5"></path>
+            <path d="M4.7 19.3l1.77-1.77"></path>
+            <path d="M17.53 6.47l1.77-1.77"></path>
+          </svg>
+          <svg class="theme-icon-dark" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.8A8.2 8.2 0 1 1 11.2 3a6.8 6.8 0 0 0 9.8 9.8Z"></path>
+          </svg>
+        </button>
+      </div>
+      <details class="mobile-nav">
+        <summary class="nav-icon" aria-label="Open navigation menu">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+            <path d="M4 7h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 17h16"></path>
+          </svg>
+        </summary>
+        <div class="mobile-nav-menu">
+          <a class="mobile-nav-link" href="#projects">
+            <span>Projects</span>
+          </a>
+          <a class="mobile-nav-link" href="#experience">
+            <span>Experience</span>
+          </a>
+          <a class="mobile-nav-link" href="#contact">
+            <span>Contact</span>
+          </a>
+          <button class="mobile-nav-link w-full text-left" type="button" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
+            <span>Toggle Theme</span>
+            <svg class="theme-icon-light" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <path d="M12 2.75v2.5"></path>
+              <path d="M12 18.75v2.5"></path>
+              <path d="M4.7 4.7l1.77 1.77"></path>
+              <path d="M17.53 17.53l1.77 1.77"></path>
+              <path d="M2.75 12h2.5"></path>
+              <path d="M18.75 12h2.5"></path>
+              <path d="M4.7 19.3l1.77-1.77"></path>
+              <path d="M17.53 6.47l1.77-1.77"></path>
+            </svg>
+            <svg class="theme-icon-dark" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A8.2 8.2 0 1 1 11.2 3a6.8 6.8 0 0 0 9.8 9.8Z"></path>
+            </svg>
+          </button>
+          <a class="mobile-nav-link" href="https://github.com/laksanagusta" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+            <span>GitHub</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.39 7.86 10.92.58.1.79-.25.79-.56v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.29-1.68-1.29-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18A10.9 10.9 0 0 1 12 6.08c.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.06.78 2.14v3.14c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+            </svg>
+          </a>
+        </div>
+      </details>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-shell flex min-h-[calc(100vh-4rem)] items-center py-12 md:py-12">
+      <div class="max-w-4xl">
+        <p class="section-label">Software Engineer</p>
+        <h1 class="max-w-4xl text-3xl font-semibold leading-[1.04] tracking-tight text-boring-text md:text-4xl">
+          Dika Laksana
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-boring-text-secondary">
+          Backend-focused software engineer building operational systems for fleets, commerce, and internal workflows, leveraging AI-assisted and agentic development workflows to ship faster.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <details class="contact-popover">
+            <summary>Discuss a Project</summary>
+            <div class="contact-menu">
+              <a class="contact-option" href="https://wa.me/6281336110224" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email @gustalaksanadika">@gustalaksanadika</a>
+            </div>
+          </details>
+          <a class="secondary-cta" href="#projects">View Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section-anchor page-shell py-16">
+      <div class="mb-8 max-w-2xl">
+        <p class="section-label">Selected Projects</p>
+        <h2 class="section-heading">Interfaces and systems shipped across operations, logistics, and commerce.</h2>
+      </div>
+      <div class="project-showcase-layout">
+        <article class="project-showcase-tile">
+          <div class="project-showcase-media ascii-3">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/manris-dashboard.png" alt="Manris risk dashboard interface">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>01 / RISK MANAGEMENT</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">DITJEN P2</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">Risk Management Application</h3>
+            <p class="project-showcase-copy">A risk management application for the Directorate General of Disease Prevention and Control at the Ministry of Health, aligned with KMK No. 1354/2024.</p>
+          </div>
+        </article>
+
+        <a class="project-showcase-tile" href="https://www.mceasy.com/" target="_blank" rel="noopener noreferrer" aria-label="Open McEasy website">
+          <div class="project-showcase-media">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/mceasy-platform.png" alt="McEasy SmartOBD platform page">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>02 / Fleet</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">McEasy</span>
+                <span class="project-showcase-tag">Contribution</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">McEasy fleet management platform</h3>
+            <p class="project-showcase-copy">A fleet operations platform for tracking vehicles in real time, combining GPS, telematics sensors, and dashboards to improve visibility across daily transport workflows.</p>
+          </div>
+        </a>
+
+        <a class="project-showcase-tile" href="https://mile.app/" target="_blank" rel="noopener noreferrer" aria-label="Open MileApp website">
+          <div class="project-showcase-media ascii-4">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/mileapp-operations.png" alt="MileApp operations management landing page">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>03 / Field Ops</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">MileApp</span>
+                <span class="project-showcase-tag">Contribution</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">MileApp no-code field workforce platform</h3>
+            <p class="project-showcase-copy">A no-code platform for field teams to plan, monitor, and execute daily operations, from logistics workflows to field service and route optimization.</p>
+          </div>
+        </a>
+
+        <a class="project-showcase-tile" href="https://guardianindonesia.co.id/" target="_blank" rel="noopener noreferrer" aria-label="Open Guardian Indonesia website">
+          <div class="project-showcase-media">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/guardian-indonesia.png" alt="Guardian Indonesia ecommerce homepage">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>04 / Commerce</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">Sirclo</span>
+                <span class="project-showcase-tag">Contribution</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">Guardian Indonesia ecommerce storefront</h3>
+            <p class="project-showcase-copy">A health and beauty commerce experience for browsing promotions, product categories, account flows, wishlists, and shopping cart actions.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="experience" class="section-anchor page-shell py-16">
+      <div class="mb-10 max-w-2xl">
+        <p class="section-label">Experience</p>
+        <h2 class="section-heading">Engineering work across transport, commerce, and operational products.</h2>
+      </div>
+      <section class="experience-list" aria-label="Professional experiences">
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Senior Software Engineer II</h3>
+            <p class="experience-meta">Sep 2023 - May 2025</p>
+            <p class="experience-meta">Kota Surabaya, East Java, Indonesia · Hybrid</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark active">McEasy</span>
+          </div>
+        </article>
+
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Associate Software Engineer</h3>
+            <p class="experience-meta">Mar 2022 - May 2023</p>
+            <p class="experience-meta">Kota Tangerang, Banten, Indonesia · Remote</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark">SIRCLO</span>
+          </div>
+        </article>
+
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Backend Engineer</h3>
+            <p class="experience-meta">Feb 2021 - Feb 2022</p>
+            <p class="experience-meta">Jakarta, Indonesia · Remote</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark">MileApp</span>
+          </div>
+        </article>
+
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Software Engineer</h3>
+            <p class="experience-meta">May 2019 - Sep 2020</p>
+            <p class="experience-meta">Makassar, Indonesia · On-site</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark">Bosowa</span>
+          </div>
+        </article>
+      </section>
+    </section>
+
+    <section id="tool-stack" class="section-anchor page-shell py-16">
+      <div class="mb-8 max-w-2xl">
+        <p class="section-label">Tool Stack</p>
+        <h2 class="section-heading">The tools I keep open while building.</h2>
+      </div>
+      <div class="tool-stack-card">
+        <section class="tool-stack-grid" aria-label="Frequently used tools">
+          <article class="tool-stack-item" aria-label="Codex">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <img src="assets/tool-stack/codex.png" alt="">
+            </div>
+            <h3 class="tool-stack-name">Codex</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Hermes Agent">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <img class="tool-stack-theme-dark" src="assets/tool-stack/hermes-agent.png" alt="">
+              <img class="tool-stack-theme-light" src="assets/tool-stack/hermes-agent.png" alt="">
+            </div>
+            <h3 class="tool-stack-name">Hermes Agent</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Zed">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" aria-hidden="true">
+                <path fill="currentColor" d="M48 32c-8.8 0-16 7.2-16 16v352H0V48C0 21.5 21.5 0 48 0h428.7c21.4 0 32.1 25.9 17 41l-264 264H304v-33h32v41c0 13.3-10.7 24-24 24H197.6l-55 55H392V192h32v200c0 17.7-14.3 32-32 32H110.6l-56 56H464c8.8 0 16-7.2 16-16V112h32v352c0 26.5-21.5 48-48 48H35.3c-21.4 0-32.1-25.9-17-41l263-263H208v32h-32v-40c0-13.3 10.7-24 24-24h113.4l56-56H120v200H88V120c0-17.7 14.3-32 32-32h281.4l56-56z"/>
+              </svg>
+            </div>
+            <h3 class="tool-stack-name">Zed</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Google AI Studio">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <img src="assets/tool-stack/google-ai-studio.png" alt="">
+            </div>
+            <h3 class="tool-stack-name">Google AI Studio</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Obsidian">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" aria-hidden="true">
+                <path fill="#a079ff" d="M198.9 298.9c13.1-3.9 34.3-9.8 58.5-11.4-13-30.8-18.2-64.4-15.3-97.7 3.3-33 15.1-60.8 26.5-84.2l6.9-14.3 9-18.4c4.7-10 8.2-18.8 9.8-27.1 1.6-8.2 1.6-15.3-.4-22.2s-6.1-14.3-14.3-22.4c-11.1-3-23-.2-31.6 7.5l-105.6 95c-5.9 5.3-9.8 12.4-11 20.4l-9 60.4c34 31.6 60.2 70.8 76.5 114.4M118.1 212l-2 6.1-55.9 124.4c-5.7 12.8-3.1 27.8 6.5 37.9l87.9 90.3c37.3-51.5 44.1-119 17.9-177-13.1-30.2-31.5-57.9-54.4-81.7M175 481.6l4.7.4c16.5.4 44.7 2 67.3 6.1 18.6 3.5 55.5 13.7 85.6 22.4 23 6.9 46.9-11.6 50.2-35.5 2.4-17.3 7.1-36.9 15.5-55.1-9.9-31.4-27.7-59.6-51.8-82-16.7-14.5-37.2-23.8-59.1-26.7-27.7-2.7-55.7.5-82 9.6 13.5 55.5 2.3 114-30.6 160.7h.2zm238-86.1c19-28.5 32.6-51 39.6-63.2 3.4-6 2.9-13.4-1.2-19-17.2-22.2-31.9-46.3-43.6-71.8-11.8-28.3-13.5-72.2-13.7-93.4 0-8.2-2.4-16.1-7.5-22.4L318.3 39c0 3.9-.8 7.7-1.6 11.6-2.6 11-6.4 21.7-11.4 31.8l-9.4 19.6-6.7 13.5c-12.6 23.8-20.7 49.7-24.1 76.5-2.8 32.9 3.2 66 17.3 95.8 29.2 2.2 57 13.8 79.1 33 22.6 20.7 40.3 46.2 51.5 74.7"/>
+              </svg>
+            </div>
+            <h3 class="tool-stack-name">Obsidian</h3>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section id="contact" class="section-anchor page-shell py-16">
+      <div class="max-w-2xl">
+        <p class="section-label">Contact</p>
+        <h2 class="section-heading">Interested in building practical systems for real operations?</h2>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-boring-text-secondary">
+          I am open to focused engineering conversations around backend systems, internal tools, AI-assisted workflows, fleet/logistics platforms, and commerce infrastructure.
+        </p>
+        <div class="mt-12">
+          <details class="contact-popover">
+            <summary>Discuss a Project</summary>
+            <div class="contact-menu">
+              <a class="contact-option" href="https://wa.me/6281336110224" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email @gustalaksanadika">@gustalaksanadika</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-boring-border py-8">
+    <div class="page-shell flex flex-col gap-3 text-sm text-boring-text-muted md:flex-row md:items-center md:justify-between">
+      <p>&copy; 2026 Dika Laksana.</p>
+      <div class="flex items-center gap-3">
+        <a class="social-link" href="https://www.threads.net/@dikalaksana_" target="_blank" rel="noopener noreferrer" aria-label="Open Threads profile @dikalaksana_">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 20.25c-4.56 0-7.5-2.88-7.5-7.5 0-5.6 3.18-8.25 7.5-8.25 3.98 0 6.75 2.36 6.75 6.19 0 2.6-1.43 4.23-3.52 4.23-1.08 0-1.9-.39-2.34-1.1-.66 1.24-1.83 1.9-3.37 1.9-1.86 0-3.14-1.15-3.14-2.8 0-1.92 1.43-3.13 3.72-3.13 1.03 0 2.1.2 3.11.55v-.37c0-1.2-.74-1.92-2.26-1.92-.97 0-1.75.32-2.36.95"/>
+            <path d="M15.87 12.63c-.53 1.1-1.48 1.77-2.7 1.77-1.19 0-1.97-.65-1.97-1.65 0-1.06.86-1.75 2.15-1.75.83 0 1.66.19 2.52.52"/>
+          </svg>
+        </a>
+        <a class="social-link" href="https://www.instagram.com/dikalaksana_" target="_blank" rel="noopener noreferrer" aria-label="Open Instagram profile @dikalaksana_">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+            <circle cx="12" cy="12" r="3.5"></circle>
+            <circle cx="17" cy="7" r="1"></circle>
+          </svg>
+        </a>
+        <a class="social-link" href="https://github.com/laksanagusta" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.39 7.86 10.92.58.1.79-.25.79-.56v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.29-1.68-1.29-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18A10.9 10.9 0 0 1 12 6.08c.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.06.78 2.14v3.14c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const storageKey = 'portfolio-theme';
+
+      function updateThemeButtons(theme) {
+        const isDark = theme === 'dark';
+        document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+          button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          button.setAttribute('aria-pressed', String(!isDark));
+          const lightIcon = button.querySelector('.theme-icon-light');
+          const darkIcon = button.querySelector('.theme-icon-dark');
+          if (lightIcon) lightIcon.hidden = !isDark;
+          if (darkIcon) darkIcon.hidden = isDark;
+        });
+      }
+
+      function setTheme(theme) {
+        root.dataset.theme = theme;
+        try {
+          localStorage.setItem(storageKey, theme);
+        } catch (_) {}
+        updateThemeButtons(theme);
+      }
+
+      const savedTheme = (() => {
+        try {
+          return localStorage.getItem(storageKey);
+        } catch (_) {
+          return null;
+        }
+      })();
+
+      setTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+      const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      function initScrollReveal() {
+        if (motionQuery.matches || !('IntersectionObserver' in window)) return;
+
+        const revealTargets = [
+          ...document.querySelectorAll('#projects > div:first-child, .project-showcase-tile, #experience > div:first-child, .experience-row, #tool-stack > div:first-child, .tool-stack-item, #contact > div'),
+        ];
+
+        revealTargets.forEach((element, index) => {
+          element.classList.add('motion-reveal');
+          element.style.setProperty('--motion-delay', `${Math.min(index % 4, 3) * 70}ms`);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.16 });
+
+        revealTargets.forEach((element) => observer.observe(element));
+      }
+
+      initScrollReveal();
+
+      document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!motionQuery.matches) {
+            button.classList.add('theme-toggle-flash');
+            window.setTimeout(() => button.classList.remove('theme-toggle-flash'), 160);
+          }
+          setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
