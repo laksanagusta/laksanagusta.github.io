@@ -333,6 +333,9 @@
     html[data-theme="light"] .tool-stack-grid {
       border-color: #E4E4E7;
     }
+    html[data-theme="light"] .tool-stack-grid > :not([hidden]) ~ :not([hidden]) {
+      border-color: #E4E4E7;
+    }
     html[data-theme="light"] .tool-stack-item {
       border-color: #E4E4E7;
     }
@@ -614,7 +617,7 @@
       <div class="hidden items-center gap-6 md:flex">
         <a class="nav-link" href="#projects">Projects</a>
         <a class="nav-link" href="#experience">Experience</a>
-        <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link" href="#tool-stack">Tools</a>
         <button class="nav-icon" type="button" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
           <svg class="theme-icon-light" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="4.5"></circle>
@@ -647,8 +650,8 @@
           <a class="mobile-nav-link" href="#experience">
             <span>Experience</span>
           </a>
-          <a class="mobile-nav-link" href="#contact">
-            <span>Contact</span>
+          <a class="mobile-nav-link" href="#tool-stack">
+            <span>Tools</span>
           </a>
           <button class="mobile-nav-link w-full text-left" type="button" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
             <span>Toggle Theme</span>
@@ -693,7 +696,7 @@
             <summary>Discuss a Project</summary>
             <div class="contact-menu">
               <a class="contact-option" href="https://wa.me/6281336110224" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email @gustalaksanadika">@gustalaksanadika</a>
+              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">Email</a>
             </div>
           </details>
           <a class="secondary-cta" href="#projects">View Projects</a>
@@ -894,7 +897,7 @@
             <summary>Discuss a Project</summary>
             <div class="contact-menu">
               <a class="contact-option" href="https://wa.me/6281336110224" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email @gustalaksanadika">@gustalaksanadika</a>
+              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">Email</a>
             </div>
           </details>
         </div>
@@ -997,6 +1000,25 @@
             window.setTimeout(() => button.classList.remove('theme-toggle-flash'), 160);
           }
           setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
+      });
+
+      function closeOpenDetailsOutsideTarget(target) {
+        document.querySelectorAll('details.contact-popover[open], details.mobile-nav[open]').forEach((details) => {
+          if (!details.contains(target)) {
+            details.removeAttribute('open');
+          }
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        closeOpenDetailsOutsideTarget(event.target);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('details.contact-popover[open], details.mobile-nav[open]').forEach((details) => {
+          details.removeAttribute('open');
         });
       });
     })();
