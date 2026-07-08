@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>boring. — Design System</title>
+  <title>Dika Laksana</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon-rounded-4463.svg?v=3">
+  <link rel="shortcut icon" type="image/svg+xml" href="assets/favicon-rounded-4463.svg?v=3">
+  <link rel="apple-touch-icon" href="assets/favicon-img-4463.jpg?v=3">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +39,11 @@
   </script>
   <style type="text/tailwindcss">
     @layer base {
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
       body {
         @apply bg-boring-bg text-boring-text font-sans antialiased;
       }
@@ -44,748 +52,954 @@
       }
     }
     @layer components {
-      .ds-section {
-        @apply border-b border-boring-border pb-16 mb-16;
+      .page-shell {
+        @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8;
       }
-      .ds-label {
-        @apply text-xs font-mono text-boring-text-muted uppercase tracking-widest mb-4;
+      .section-anchor {
+        scroll-margin-top: 2rem;
       }
-      .token-card {
-        @apply bg-boring-surface-elevated border border-boring-border rounded-lg p-4 font-mono text-sm;
+      .topbar {
+        @apply sticky top-0 z-50 border-b border-boring-border bg-boring-bg/90 backdrop-blur;
       }
-      .project-showcase-grid {
-        @apply grid gap-8 lg:grid-cols-[0.95fr_1.05fr] items-center;
+      .nav-link {
+        @apply text-sm text-boring-text-secondary;
       }
-      .project-showcase-visual {
-        @apply relative min-h-[420px] overflow-hidden rounded-[24px] border border-boring-border bg-boring-surface;
+      .nav-icon {
+        @apply inline-flex h-8 w-8 items-center justify-center rounded-md border border-boring-border text-boring-text-secondary;
       }
-      .project-showcase-visual::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.32));
-        pointer-events: none;
+      .mobile-nav {
+        @apply relative md:hidden;
       }
-      .project-showcase-visual::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, rgba(24, 24, 27, 0.62), rgba(24, 24, 27, 0.18) 40%, rgba(24, 24, 27, 0.62));
-        pointer-events: none;
+      .mobile-nav summary {
+        @apply inline-flex cursor-pointer list-none items-center justify-center rounded-md border border-boring-border text-boring-text-secondary;
+      }
+      .mobile-nav summary::-webkit-details-marker {
+        display: none;
+      }
+      .mobile-nav summary svg {
+        @apply h-4 w-4;
+      }
+      .mobile-nav[open] summary {
+        @apply border-boring-border-subtle text-boring-text;
+      }
+      .mobile-nav-menu {
+        @apply absolute right-0 top-full z-50 mt-3 w-52 overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated p-2 shadow-[0_18px_60px_-28px_rgba(250,250,250,0.45),0_12px_34px_-24px_rgba(0,0,0,0.95)];
+      }
+      .mobile-nav-link {
+        @apply flex items-center justify-between rounded-md px-3 py-2 text-sm text-boring-text-secondary;
+      }
+      .mobile-nav-link svg {
+        @apply h-4 w-4;
+      }
+      .section-label {
+        @apply mb-4 font-mono text-xs uppercase tracking-widest text-boring-text-muted;
+      }
+      .section-heading {
+        @apply text-2xl font-semibold tracking-tight text-boring-text md:text-3xl;
+      }
+      .contact-popover {
+        @apply relative inline-block;
+      }
+      .contact-popover summary {
+        @apply inline-flex cursor-pointer list-none rounded-md bg-boring-text px-4 py-2 font-mono text-sm font-medium text-boring-bg;
+      }
+      .contact-popover summary::-webkit-details-marker {
+        display: none;
+      }
+      .contact-menu {
+        @apply absolute left-0 top-full z-20 mt-3 min-w-56 overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated p-2 shadow-[0_18px_60px_-28px_rgba(250,250,250,0.45),0_12px_34px_-24px_rgba(0,0,0,0.95)];
+      }
+      .contact-option {
+        @apply block rounded-md px-3 py-2 font-mono text-sm text-boring-text-secondary;
+      }
+      .secondary-cta {
+        @apply inline-flex items-center justify-center rounded-md border border-boring-border px-4 py-2 font-mono text-sm text-boring-text-secondary;
+      }
+      .project-showcase-layout {
+        @apply grid gap-4 md:grid-cols-2;
+      }
+      .project-showcase-tile {
+        @apply block overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated;
+      }
+      .project-showcase-media {
+        @apply border-b border-boring-border bg-boring-bg p-5;
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62)), url('assets/project-showcase/ascii-magic-2.png');
+        background-position: center;
+        background-size: cover;
+      }
+      .project-showcase-media.ascii-3 {
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62)), url('assets/project-showcase/ascii-magic-3.png');
+      }
+      .project-showcase-media.ascii-4 {
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62)), url('assets/project-showcase/ascii-magic-4.png');
+      }
+      .project-showcase-image-wrap {
+        @apply aspect-[16/10] overflow-hidden rounded-md border border-boring-border bg-boring-bg shadow-[0_24px_70px_-34px_rgba(34,197,94,0.45),0_16px_44px_-28px_rgba(245,90,54,0.38),0_12px_30px_-18px_rgba(0,0,0,0.9)];
+      }
+      .project-showcase-image {
+        @apply h-full w-full rounded-md object-cover object-top;
+      }
+      .project-showcase-body {
+        @apply p-6;
+      }
+      .project-showcase-meta {
+        @apply mb-3 flex items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest text-boring-text-muted;
+      }
+      .project-showcase-badge-group {
+        @apply flex flex-wrap items-center justify-end gap-1.5;
+      }
+      .project-showcase-title {
+        @apply text-base font-medium text-boring-text;
       }
       .project-showcase-copy {
-        @apply px-0;
+        @apply mt-2 max-w-[58ch] text-sm leading-relaxed text-boring-text-secondary;
+      }
+      .project-showcase-tag {
+        @apply rounded-md border border-boring-border px-2 py-1 text-[10px] text-boring-text-secondary;
+      }
+      .tool-stack-card {
+        @apply overflow-hidden rounded-lg border border-boring-border bg-boring-surface-elevated;
+      }
+      .tool-stack-grid {
+        @apply grid grid-cols-1 divide-y divide-boring-border md:grid-cols-5 md:divide-y-0 md:divide-x;
+      }
+      .tool-stack-item {
+        @apply flex min-h-40 flex-col gap-5 p-6 md:p-7;
+      }
+      .tool-stack-mark {
+        @apply inline-flex h-14 w-14 items-center justify-center rounded-xl border border-boring-border bg-[#050505] p-2 text-boring-text shadow-[0_14px_30px_-20px_rgba(0,0,0,0.9)];
+      }
+      .tool-stack-mark img,
+      .tool-stack-mark svg {
+        @apply h-full w-full object-contain;
+      }
+      .tool-stack-theme-light {
+        display: none;
+      }
+      .tool-stack-name {
+        @apply font-mono text-sm font-medium text-boring-text;
+      }
+      .experience-list {
+        @apply space-y-12;
+      }
+      .experience-row {
+        @apply grid gap-6 md:grid-cols-[1fr_180px] md:items-start;
+      }
+      .experience-role {
+        @apply text-base font-medium tracking-tight text-boring-text;
+      }
+      .experience-company {
+        @apply mt-1 text-base text-boring-text;
+      }
+      .experience-meta {
+        @apply mt-1 text-sm leading-relaxed text-boring-text-muted;
+      }
+      .experience-brand {
+        @apply font-mono text-xs font-semibold uppercase tracking-widest text-boring-text-secondary md:text-right;
+      }
+      .experience-brand-mark {
+        @apply inline-flex min-h-12 items-center justify-start rounded-md border border-boring-border px-4 py-3 md:justify-center;
+      }
+      .experience-brand-mark.active {
+        @apply border-boring-accent/60 bg-boring-accent/10 text-boring-accent shadow-[0_0_20px_rgba(34,197,94,0.12)];
+      }
+      .social-link {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-boring-border text-boring-text-secondary;
+      }
+      .social-link svg {
+        @apply h-4 w-4;
       }
     }
   </style>
   <style>
-    /* Custom scrollbar */
+    html[data-theme="light"] body {
+      background-color: #FAFAFA;
+      color: #18181B;
+    }
+    html[data-theme="light"] .bg-boring-bg {
+      background-color: #FAFAFA;
+    }
+    html[data-theme="light"] .bg-boring-surface {
+      background-color: #F4F4F5;
+    }
+    html[data-theme="light"] .bg-boring-surface-elevated {
+      background-color: #FFFFFF;
+    }
+    html[data-theme="light"] .bg-boring-text {
+      background-color: #18181B;
+    }
+    html[data-theme="light"] .bg-boring-accent {
+      background-color: #16A34A;
+    }
+    html[data-theme="light"] .bg-boring-accent-dim {
+      background-color: #DCFCE7;
+    }
+    html[data-theme="light"] .text-boring-text {
+      color: #18181B;
+    }
+    html[data-theme="light"] .text-boring-text-secondary {
+      color: #52525B;
+    }
+    html[data-theme="light"] .text-boring-text-muted {
+      color: #71717A;
+    }
+    html[data-theme="light"] .text-boring-bg {
+      color: #FAFAFA;
+    }
+    html[data-theme="light"] .text-boring-accent {
+      color: #16A34A;
+    }
+    html[data-theme="light"] .border-boring-border {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .border-boring-border-subtle {
+      border-color: #D4D4D8;
+    }
+    html[data-theme="light"] .border-boring-accent {
+      border-color: #16A34A;
+    }
+    html[data-theme="light"] .topbar {
+      border-color: #E4E4E7;
+      background-color: rgba(250, 250, 250, 0.9);
+    }
+    html[data-theme="light"] .nav-link,
+    html[data-theme="light"] .nav-icon,
+    html[data-theme="light"] .mobile-nav summary,
+    html[data-theme="light"] .mobile-nav-link,
+    html[data-theme="light"] .contact-option,
+    html[data-theme="light"] .secondary-cta,
+    html[data-theme="light"] .social-link,
+    html[data-theme="light"] .experience-brand {
+      color: #52525B;
+      border-color: #D4D4D8;
+    }
+    html[data-theme="light"] .mobile-nav-menu,
+    html[data-theme="light"] .contact-menu {
+      background-color: #FFFFFF;
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .mobile-nav-link:hover,
+    html[data-theme="light"] .contact-option:hover {
+      background-color: #F4F4F5;
+      color: #18181B;
+    }
+    html[data-theme="light"] .contact-popover summary {
+      background-color: #18181B;
+      color: #FAFAFA;
+    }
+    html[data-theme="light"] .project-showcase-tile {
+      background-color: #FFFFFF;
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .section-label {
+      color: #71717A;
+    }
+    html[data-theme="light"] .section-heading,
+    html[data-theme="light"] .project-showcase-title,
+    html[data-theme="light"] .experience-role,
+    html[data-theme="light"] .experience-company,
+    html[data-theme="light"] .experience-brand-mark {
+      color: #18181B;
+    }
+    html[data-theme="light"] .project-showcase-copy,
+    html[data-theme="light"] .experience-meta,
+    html[data-theme="light"] .project-showcase-tag {
+      color: #52525B;
+    }
+    html[data-theme="light"] .project-showcase-meta {
+      color: #71717A;
+    }
+    html[data-theme="light"] .project-showcase-media {
+      background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.18), rgba(250, 250, 250, 0.48)), url('assets/project-showcase/ascii-magic-2.png');
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .project-showcase-media.ascii-3 {
+      background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.18), rgba(250, 250, 250, 0.48)), url('assets/project-showcase/ascii-magic-3.png');
+    }
+    html[data-theme="light"] .project-showcase-media.ascii-4 {
+      background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.18), rgba(250, 250, 250, 0.48)), url('assets/project-showcase/ascii-magic-4.png');
+    }
+    html[data-theme="light"] .project-showcase-body {
+      background-color: #FFFFFF;
+    }
+    html[data-theme="light"] .project-showcase-tag {
+      border-color: #D4D4D8;
+      background-color: #FAFAFA;
+    }
+    html[data-theme="light"] .tool-stack-card {
+      background-color: #FFFFFF;
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .tool-stack-grid {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .tool-stack-item {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] .tool-stack-mark {
+      background-color: #18181B;
+      border-color: #D4D4D8;
+      color: #FAFAFA;
+    }
+    html[data-theme="light"] .tool-stack-name {
+      color: #18181B;
+    }
+    html[data-theme="light"] .tool-stack-theme-dark {
+      display: none;
+    }
+    html[data-theme="light"] .tool-stack-theme-light {
+      display: block;
+    }
+    html[data-theme="light"] .experience-brand-mark.active {
+      background-color: #DCFCE7;
+      border-color: rgba(22, 163, 74, 0.25);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.12);
+    }
+    html[data-theme="light"] footer {
+      border-color: #E4E4E7;
+    }
+    html[data-theme="light"] ::-webkit-scrollbar-track {
+      background: #FAFAFA;
+    }
+    html[data-theme="light"] ::-webkit-scrollbar-thumb {
+      background: #D4D4D8;
+    }
+    html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+      background: #A1A1AA;
+    }
+    [data-theme-toggle] .theme-icon-dark {
+      display: none;
+    }
+    html[data-theme="light"] [data-theme-toggle] .theme-icon-dark {
+      display: inline-block;
+    }
+    html[data-theme="light"] [data-theme-toggle] .theme-icon-light {
+      display: none;
+    }
+    :root {
+      --motion-ease: cubic-bezier(0.23, 1, 0.32, 1);
+      --motion-ease-emphasized: cubic-bezier(0.23, 1, 0.32, 1);
+      --motion-ease-settle: cubic-bezier(0.77, 0, 0.175, 1);
+      --motion-quick: 120ms;
+      --motion-standard: 180ms;
+      --motion-slow: 420ms;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .topbar {
+        animation: topbar-enter var(--motion-slow) var(--motion-ease-emphasized) both;
+      }
+      main > section:first-child .section-label,
+      main > section:first-child h1,
+      main > section:first-child p:not(.section-label),
+      main > section:first-child .contact-popover,
+      main > section:first-child .secondary-cta {
+        animation: hero-rise var(--motion-slow) var(--motion-ease-emphasized) both;
+      }
+      main > section:first-child .section-label {
+        animation-delay: 70ms;
+      }
+      main > section:first-child h1 {
+        animation-delay: 130ms;
+      }
+      main > section:first-child p:not(.section-label) {
+        animation-delay: 190ms;
+      }
+      main > section:first-child .contact-popover,
+      main > section:first-child .secondary-cta {
+        animation-delay: 250ms;
+      }
+      .mobile-nav[open] .mobile-nav-menu,
+      .contact-popover[open] .contact-menu {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        transform-origin: top right;
+        transition: opacity 160ms var(--motion-ease), transform 160ms var(--motion-ease);
+        @starting-style {
+          opacity: 0;
+          transform: translate3d(0, -4px, 0) scale(0.98);
+        }
+      }
+      .contact-popover[open] .contact-menu {
+        transform-origin: top left;
+      }
+      .motion-reveal {
+        opacity: 0;
+        transform: translate3d(0, 10px, 0);
+        transition: opacity 260ms var(--motion-ease), transform 260ms var(--motion-ease);
+        transition-delay: var(--motion-delay, 0ms);
+      }
+      .motion-reveal.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+      .project-showcase-image,
+      .project-showcase-media,
+      .project-showcase-tag,
+      .experience-brand-mark,
+      .theme-icon-light,
+      .theme-icon-dark {
+        transition-duration: var(--motion-standard);
+        transition-timing-function: var(--motion-ease);
+      }
+      .theme-icon-light,
+      .theme-icon-dark {
+        transition-property: opacity, transform;
+      }
+      .theme-toggle-flash .theme-icon-light,
+      .theme-toggle-flash .theme-icon-dark {
+        transform: rotate(-16deg) scale(0.92);
+      }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .nav-link {
+        transition: color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .nav-link:hover {
+        color: #FAFAFA;
+        transform: translateY(-1px);
+      }
+      .nav-icon,
+      .mobile-nav summary,
+      .social-link {
+        transition: border-color var(--motion-quick) var(--motion-ease), color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .nav-icon:hover,
+      .mobile-nav summary:hover,
+      .social-link:hover {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+        transform: translateY(-1px);
+      }
+      .mobile-nav-link,
+      .contact-option {
+        transition: background-color var(--motion-quick) var(--motion-ease), color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .mobile-nav-link:hover,
+      .contact-option:hover {
+        background-color: #09090B;
+        color: #FAFAFA;
+        transform: translateX(2px);
+      }
+      .contact-popover summary {
+        transition: background-color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .contact-popover summary:hover {
+        background-color: #A1A1AA;
+        transform: translateY(-1px);
+      }
+      .contact-popover summary:active,
+      .secondary-cta:active,
+      .nav-icon:active,
+      .social-link:active {
+        transform: translateY(0) scale(0.98);
+        transition-duration: 80ms;
+      }
+      .secondary-cta {
+        transition: border-color var(--motion-quick) var(--motion-ease), color var(--motion-quick) var(--motion-ease), transform var(--motion-quick) var(--motion-ease);
+      }
+      .secondary-cta:hover {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+        transform: translateY(-1px);
+      }
+      .project-showcase-tile {
+        transition: border-color var(--motion-standard) var(--motion-ease), transform var(--motion-standard) var(--motion-ease);
+      }
+      .project-showcase-tile:hover {
+        border-color: #3F3F46;
+        transform: translateY(-3px);
+      }
+      .project-showcase-tile:hover .project-showcase-media {
+        background-position: center 46%;
+      }
+      .project-showcase-tile:hover .project-showcase-image {
+        transform: scale(1.025);
+      }
+      .project-showcase-tile:hover .project-showcase-tag {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+      }
+      .tool-stack-item {
+        transition: transform var(--motion-standard) var(--motion-ease), background-color var(--motion-standard) var(--motion-ease);
+      }
+      .tool-stack-item:hover {
+        transform: translateY(-2px);
+      }
+      .tool-stack-item:hover .tool-stack-mark {
+        border-color: #3F3F46;
+      }
+      .experience-row {
+        transition: transform var(--motion-standard) var(--motion-ease);
+      }
+      .experience-row:hover {
+        transform: translateX(3px);
+      }
+      .experience-row:hover .experience-brand-mark {
+        border-color: #3F3F46;
+        color: #FAFAFA;
+      }
+      html[data-theme="light"] .nav-link:hover,
+      html[data-theme="light"] .nav-icon:hover,
+      html[data-theme="light"] .mobile-nav summary:hover,
+      html[data-theme="light"] .social-link:hover,
+      html[data-theme="light"] .secondary-cta:hover,
+      html[data-theme="light"] .project-showcase-tile:hover .project-showcase-tag,
+      html[data-theme="light"] .experience-row:hover .experience-brand-mark {
+        border-color: #A1A1AA;
+        color: #18181B;
+      }
+      html[data-theme="light"] .mobile-nav-link:hover,
+      html[data-theme="light"] .contact-option:hover {
+        background-color: #F4F4F5;
+        color: #18181B;
+      }
+      html[data-theme="light"] .project-showcase-tile:hover {
+        border-color: #A1A1AA;
+      }
+      html[data-theme="light"] .tool-stack-item:hover .tool-stack-mark {
+        border-color: #A1A1AA;
+      }
+    }
+    @keyframes topbar-enter {
+      from {
+        opacity: 0;
+        transform: translate3d(0, -10px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    @keyframes hero-rise {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      .topbar,
+      main > section:first-child .section-label,
+      main > section:first-child h1,
+      main > section:first-child p:not(.section-label),
+      main > section:first-child .contact-popover,
+      main > section:first-child .secondary-cta {
+        animation: none;
+      }
+      .motion-reveal,
+      .motion-reveal.is-visible,
+      .mobile-nav[open] .mobile-nav-menu,
+      .contact-popover[open] .contact-menu {
+        opacity: 1;
+        transform: none;
+        transition-property: opacity, color, background-color, border-color;
+      }
+    }
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #3F3F46; }
-    
-    /* Terminal blink */
-    .cursor-blink {
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-    
-    /* Computer frame styling */
-    .computer-frame {
-      background: #E8E4DC;
-      border-radius: 24px;
-      padding: 24px 24px 32px;
-      box-shadow: 
-        0 0 0 1px rgba(0,0,0,0.1),
-        0 20px 40px -10px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.5);
-      position: relative;
-    }
-    .computer-frame::before {
-      content: '';
-      position: absolute;
-      inset: 12px;
-      border: 2px solid #D4CFC6;
-      border-radius: 16px;
-      pointer-events: none;
-    }
-    .computer-screen {
-      background: #0D0D0D;
-      border-radius: 12px;
-      padding: 24px;
-      min-height: 320px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .computer-brand {
-      color: #8B8680;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.05em;
-    }
-    .computer-indicator {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22C55E;
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
-    }
-    
-    /* Grid table borders */
-    .grid-table {
-      display: grid;
-      border: 1px solid #27272A;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .grid-table-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-table-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .grid-cell {
-      padding: 24px;
-      border-right: 1px solid #27272A;
-      border-bottom: 1px solid #27272A;
-    }
-    .grid-cell:nth-child(3n) { border-right: none; }
-    .grid-cell:nth-last-child(-n+3):nth-child(3n+1),
-    .grid-cell:nth-last-child(-n+3):nth-child(3n+2),
-    .grid-cell:nth-last-child(-n+3):nth-child(3n+3) { border-bottom: none; }
-    
-    @media (max-width: 768px) {
-      .grid-table-3, .grid-table-2 { grid-template-columns: 1fr; }
-      .grid-cell { border-right: none; }
-      .grid-cell:nth-last-child(-n+3) { border-bottom: 1px solid #27272A; }
-      .grid-cell:last-child { border-bottom: none; }
-    }
   </style>
 </head>
-<body class="min-h-screen">
-
-  <!-- Navigation -->
-  <nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="#" class="font-mono text-sm font-semibold text-boring-text">boring.</a>
-    <div class="flex items-center gap-6">
-      <a href="#tokens" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Tokens</a>
-      <a href="#components" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Components</a>
-      <a href="#project-showcase" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Projects</a>
-      <a href="#preview" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Preview</a>
-      <a href="https://github.com" target="_blank" class="text-boring-text-secondary hover:text-boring-text transition-colors">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-      </a>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <header class="max-w-5xl mx-auto px-6 pt-12 pb-16">
-    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Design System</h1>
-    <p class="text-boring-text-secondary text-lg max-w-xl">A comprehensive token and component reference for the boring. aesthetic — dark, minimal, utilitarian.</p>
+<body>
+  <header class="topbar">
+    <nav class="page-shell flex h-16 items-center justify-between">
+      <a href="#" class="font-mono text-sm font-semibold tracking-tight text-boring-text">@dikalaksana_</a>
+      <div class="hidden items-center gap-6 md:flex">
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#experience">Experience</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <button class="nav-icon" type="button" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
+          <svg class="theme-icon-light" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <path d="M12 2.75v2.5"></path>
+            <path d="M12 18.75v2.5"></path>
+            <path d="M4.7 4.7l1.77 1.77"></path>
+            <path d="M17.53 17.53l1.77 1.77"></path>
+            <path d="M2.75 12h2.5"></path>
+            <path d="M18.75 12h2.5"></path>
+            <path d="M4.7 19.3l1.77-1.77"></path>
+            <path d="M17.53 6.47l1.77-1.77"></path>
+          </svg>
+          <svg class="theme-icon-dark" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.8A8.2 8.2 0 1 1 11.2 3a6.8 6.8 0 0 0 9.8 9.8Z"></path>
+          </svg>
+        </button>
+      </div>
+      <details class="mobile-nav">
+        <summary class="nav-icon" aria-label="Open navigation menu">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+            <path d="M4 7h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 17h16"></path>
+          </svg>
+        </summary>
+        <div class="mobile-nav-menu">
+          <a class="mobile-nav-link" href="#projects">
+            <span>Projects</span>
+          </a>
+          <a class="mobile-nav-link" href="#experience">
+            <span>Experience</span>
+          </a>
+          <a class="mobile-nav-link" href="#contact">
+            <span>Contact</span>
+          </a>
+          <button class="mobile-nav-link w-full text-left" type="button" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
+            <span>Toggle Theme</span>
+            <svg class="theme-icon-light" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <path d="M12 2.75v2.5"></path>
+              <path d="M12 18.75v2.5"></path>
+              <path d="M4.7 4.7l1.77 1.77"></path>
+              <path d="M17.53 17.53l1.77 1.77"></path>
+              <path d="M2.75 12h2.5"></path>
+              <path d="M18.75 12h2.5"></path>
+              <path d="M4.7 19.3l1.77-1.77"></path>
+              <path d="M17.53 6.47l1.77-1.77"></path>
+            </svg>
+            <svg class="theme-icon-dark" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A8.2 8.2 0 1 1 11.2 3a6.8 6.8 0 0 0 9.8 9.8Z"></path>
+            </svg>
+          </button>
+          <a class="mobile-nav-link" href="https://github.com/laksanagusta" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+            <span>GitHub</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.39 7.86 10.92.58.1.79-.25.79-.56v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.29-1.68-1.29-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18A10.9 10.9 0 0 1 12 6.08c.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.06.78 2.14v3.14c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+            </svg>
+          </a>
+        </div>
+      </details>
+    </nav>
   </header>
 
-  <main class="max-w-5xl mx-auto px-6 pb-32">
-
-    <!-- DESIGN TOKENS SECTION -->
-    <section id="tokens" class="ds-section">
-      <div class="ds-label">Design Tokens</div>
-      
-      <!-- Color Tokens -->
-      <div class="mb-12">
-        <h2 class="text-lg font-semibold mb-6">Colors</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-bg border border-boring-border mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-bg</div>
-            <div class="text-boring-text font-mono text-sm">#000000</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-surface-elevated mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-surface</div>
-            <div class="text-boring-text font-mono text-sm">#18181B</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-border mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-border</div>
-            <div class="text-boring-text font-mono text-sm">#27272A</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-text mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-text</div>
-            <div class="text-boring-text font-mono text-sm">#FAFAFA</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-text-secondary mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-text-secondary</div>
-            <div class="text-boring-text font-mono text-sm">#A1A1AA</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-text-muted mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-text-muted</div>
-            <div class="text-boring-text font-mono text-sm">#71717A</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-accent mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-accent</div>
-            <div class="text-boring-text font-mono text-sm">#22C55E</div>
-          </div>
-          <div class="token-card">
-            <div class="w-full h-16 rounded-lg bg-boring-surface mb-3"></div>
-            <div class="text-boring-text-secondary text-xs">--color-surface-subtle</div>
-            <div class="text-boring-text font-mono text-sm">#09090B</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Typography Tokens -->
-      <div class="mb-12">
-        <h2 class="text-lg font-semibold mb-6">Typography</h2>
-        <div class="token-card mb-4">
-          <div class="flex justify-between items-baseline mb-2">
-            <span class="text-boring-text-secondary text-xs">--font-sans</span>
-            <span class="text-boring-text-secondary text-xs">Headings & UI</span>
-          </div>
-          <div class="text-boring-text font-sans text-lg">Inter, system-ui, sans-serif</div>
-        </div>
-        <div class="token-card mb-4">
-          <div class="flex justify-between items-baseline mb-2">
-            <span class="text-boring-text-secondary text-xs">--font-mono</span>
-            <span class="text-boring-text-secondary text-xs">Code & Data</span>
-          </div>
-          <div class="text-boring-text font-mono text-lg">JetBrains Mono, monospace</div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--text-hero (48px / bold / -0.02em)</div>
-            <div class="text-4xl md:text-5xl font-bold tracking-tight">Hero Title</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--text-section (14px / medium / 0.08em uppercase)</div>
-            <div class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary">Section Label</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--text-body (14px / normal / 1.6)</div>
-            <div class="text-sm leading-relaxed text-boring-text-secondary">Body copy with comfortable line height for reading technical documentation and feature descriptions.</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--text-stat (36px / bold / -0.01em)</div>
-            <div class="text-4xl font-bold">~3 ms</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Spacing Tokens -->
-      <div class="mb-12">
-        <h2 class="text-lg font-semibold mb-6">Spacing</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-xs (4px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 4px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-sm (8px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 8px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-md (16px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 16px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-lg (24px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 24px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-xl (32px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 32px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-2xl (48px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 48px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-3xl (64px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 64px;"></div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-2">--space-4xl (80px)</div>
-            <div class="h-1 bg-boring-accent rounded" style="width: 80px;"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Elevation & Radius -->
-      <div class="mb-12">
-        <h2 class="text-lg font-semibold mb-6">Elevation & Radius</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-3">--radius-sm (6px)</div>
-            <div class="bg-boring-surface-elevated border border-boring-border h-16 rounded-md flex items-center justify-center text-xs text-boring-text-muted">6px</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-3">--radius-md (12px)</div>
-            <div class="bg-boring-surface-elevated border border-boring-border h-16 rounded-xl flex items-center justify-center text-xs text-boring-text-muted">12px</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-3">--radius-pill (999px)</div>
-            <div class="bg-boring-surface-elevated border border-boring-border h-16 rounded-full flex items-center justify-center text-xs text-boring-text-muted">pill</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Shadows -->
-      <div>
-        <h2 class="text-lg font-semibold mb-6">Shadows</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-3">--shadow-sm</div>
-            <div class="bg-boring-surface-elevated h-16 rounded-xl shadow-sm flex items-center justify-center text-xs text-boring-text-muted">0 1px 2px 0 rgb(0 0 0 / 0.05)</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-3">--shadow-md</div>
-            <div class="bg-boring-surface-elevated h-16 rounded-xl shadow-md flex items-center justify-center text-xs text-boring-text-muted">0 4px 6px -1px rgb(0 0 0 / 0.1)</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-3">--shadow-glow</div>
-            <div class="bg-boring-accent/10 border border-boring-accent/20 h-16 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.15)] flex items-center justify-center text-xs text-boring-accent">Green glow</div>
-          </div>
+  <main>
+    <section class="page-shell flex min-h-[calc(100vh-4rem)] items-center py-12 md:py-12">
+      <div class="max-w-4xl">
+        <p class="section-label">Software Engineer</p>
+        <h1 class="max-w-4xl text-3xl font-semibold leading-[1.04] tracking-tight text-boring-text md:text-4xl">
+          Dika Laksana
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-boring-text-secondary">
+          Backend-focused software engineer building operational systems for fleets, commerce, and internal workflows, leveraging AI-assisted and agentic development workflows to ship faster.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <details class="contact-popover">
+            <summary>Discuss a Project</summary>
+            <div class="contact-menu">
+              <a class="contact-option" href="https://wa.me/6281336110224" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email @gustalaksanadika">@gustalaksanadika</a>
+            </div>
+          </details>
+          <a class="secondary-cta" href="#projects">View Projects</a>
         </div>
       </div>
     </section>
 
-    <!-- COMPONENTS SECTION -->
-    <section id="components" class="ds-section">
-      <div class="ds-label">Components</div>
-
-      <!-- Button Group -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Buttons</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-4">Primary Button</div>
-            <div class="flex items-center gap-4">
-              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
-                Fork on GitHub
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </button>
-            </div>
-            <div class="mt-4 text-xs text-boring-text-muted font-mono">bg: #FAFAFA, text: #000, radius: 6px, font: mono 14px medium</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-4">Secondary / Ghost Button</div>
-            <div class="flex items-center gap-4">
-              <button class="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-boring-border text-boring-text-secondary font-mono text-sm rounded-md hover:border-boring-text-secondary hover:text-boring-text transition-colors">
-                Read the docs
-              </button>
-            </div>
-            <div class="mt-4 text-xs text-boring-text-muted font-mono">bg: transparent, border: #27272A, text: #A1A1AA</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-4">Link Button</div>
-            <div class="flex items-center gap-4">
-              <button class="inline-flex items-center gap-1 text-boring-text-secondary font-mono text-sm hover:text-boring-text transition-colors group">
-                setup & API docs
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="group-hover:translate-x-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </button>
-            </div>
-            <div class="mt-4 text-xs text-boring-text-muted font-mono">no bg/border, text only with arrow</div>
-          </div>
-          <div class="token-card">
-            <div class="text-boring-text-secondary text-xs mb-4">Nav Link</div>
-            <div class="flex items-center gap-4">
-              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
-            </div>
-            <div class="mt-4 text-xs text-boring-text-muted font-mono">font: sans 14px, color: #A1A1AA</div>
-          </div>
-        </div>
+    <section id="projects" class="section-anchor page-shell py-16">
+      <div class="mb-8 max-w-2xl">
+        <p class="section-label">Selected Projects</p>
+        <h2 class="section-heading">Interfaces and systems shipped across operations, logistics, and commerce.</h2>
       </div>
+      <div class="project-showcase-layout">
+        <article class="project-showcase-tile">
+          <div class="project-showcase-media ascii-3">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/manris-dashboard.png" alt="Manris risk dashboard interface">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>01 / RISK MANAGEMENT</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">DITJEN P2</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">Risk Management Application</h3>
+            <p class="project-showcase-copy">A risk management application for the Directorate General of Disease Prevention and Control at the Ministry of Health, aligned with KMK No. 1354/2024.</p>
+          </div>
+        </article>
 
-      <!-- Cards -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Cards</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="token-card p-0 overflow-hidden">
-            <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Feature Card (Grid Cell)</div>
-            <div class="p-6">
-              <h3 class="text-boring-text font-medium mb-2">Sandboxes</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Headless microVMs with a serial console + an AI that drives them. python3 · node · claude, milliseconds to boot, opt-in internet.</p>
+        <a class="project-showcase-tile" href="https://www.mceasy.com/" target="_blank" rel="noopener noreferrer" aria-label="Open McEasy website">
+          <div class="project-showcase-media">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/mceasy-platform.png" alt="McEasy SmartOBD platform page">
             </div>
-            <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">border: 1px solid #27272A, padding: 24px</div>
           </div>
-          <div class="token-card p-0 overflow-hidden">
-            <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">CTA Card</div>
-            <div class="p-6">
-              <h3 class="text-boring-text font-medium mb-2">Run your own</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed mb-4">It's open source (Apache-2.0) and self-hosted — bring your own Anthropic + S3 keys, point it at a Linux box with /dev/kvm, or run the whole thing on an Apple Silicon Mac with one command.</p>
-              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
-                Fork on GitHub
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </button>
-              <span class="ml-3 inline-flex items-center gap-1 text-boring-text-secondary font-mono text-sm hover:text-boring-text transition-colors cursor-pointer group">
-                setup & API docs
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="group-hover:translate-x-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </span>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>02 / Fleet</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">McEasy</span>
+                <span class="project-showcase-tag">Contribution</span>
+              </div>
             </div>
-            <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">bg: #18181B, radius: 12px, border: 1px solid #27272A</div>
+            <h3 class="project-showcase-title">McEasy fleet management platform</h3>
+            <p class="project-showcase-copy">A fleet operations platform for tracking vehicles in real time, combining GPS, telematics sensors, and dashboards to improve visibility across daily transport workflows.</p>
           </div>
-        </div>
+        </a>
+
+        <a class="project-showcase-tile" href="https://mile.app/" target="_blank" rel="noopener noreferrer" aria-label="Open MileApp website">
+          <div class="project-showcase-media ascii-4">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/mileapp-operations.png" alt="MileApp operations management landing page">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>03 / Field Ops</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">MileApp</span>
+                <span class="project-showcase-tag">Contribution</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">MileApp no-code field workforce platform</h3>
+            <p class="project-showcase-copy">A no-code platform for field teams to plan, monitor, and execute daily operations, from logistics workflows to field service and route optimization.</p>
+          </div>
+        </a>
+
+        <a class="project-showcase-tile" href="https://guardianindonesia.co.id/" target="_blank" rel="noopener noreferrer" aria-label="Open Guardian Indonesia website">
+          <div class="project-showcase-media">
+            <div class="project-showcase-image-wrap">
+              <img class="project-showcase-image" src="assets/project-showcase/guardian-indonesia.png" alt="Guardian Indonesia ecommerce homepage">
+            </div>
+          </div>
+          <div class="project-showcase-body">
+            <div class="project-showcase-meta">
+              <span>04 / Commerce</span>
+              <div class="project-showcase-badge-group">
+                <span class="project-showcase-tag">Sirclo</span>
+                <span class="project-showcase-tag">Contribution</span>
+              </div>
+            </div>
+            <h3 class="project-showcase-title">Guardian Indonesia ecommerce storefront</h3>
+            <p class="project-showcase-copy">A health and beauty commerce experience for browsing promotions, product categories, account flows, wishlists, and shopping cart actions.</p>
+          </div>
+        </a>
       </div>
+    </section>
 
-      <!-- Project Showcase -->
-      <div id="project-showcase" class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Project Showcase</h2>
-        <section class="project-showcase-grid">
-          <div class="project-showcase-copy">
-            <p class="font-mono text-xs uppercase tracking-widest text-boring-text-muted mb-4">PROJECT SHOWCASE</p>
-            <h3 id="project-showcase-title" class="text-2xl md:text-4xl font-semibold tracking-tight text-boring-text mb-4">Satu section untuk menampilkan karya utama.</h3>
-            <p class="max-w-xl text-base md:text-lg leading-relaxed text-boring-text-secondary">
-              Gambar komponen diambil dari satu folder yang sama. Tambahkan file baru ke folder tersebut, lalu render sebagai background image di area visual.
-            </p>
+    <section id="experience" class="section-anchor page-shell py-16">
+      <div class="mb-10 max-w-2xl">
+        <p class="section-label">Experience</p>
+        <h2 class="section-heading">Engineering work across transport, commerce, and operational products.</h2>
+      </div>
+      <section class="experience-list" aria-label="Professional experiences">
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Senior Software Engineer II</h3>
+            <p class="experience-meta">Sep 2023 - May 2025</p>
+            <p class="experience-meta">Kota Surabaya, East Java, Indonesia · Hybrid</p>
           </div>
-          <div
-            class="project-showcase-visual"
-            style="background-image: url('assets/project-showcase/mceasy-homepage.png'); background-size: cover; background-position: center top;"
-            aria-label="McEasy homepage preview"
-          ></div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark active">McEasy</span>
+          </div>
+        </article>
+
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Associate Software Engineer</h3>
+            <p class="experience-meta">Mar 2022 - May 2023</p>
+            <p class="experience-meta">Kota Tangerang, Banten, Indonesia · Remote</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark">SIRCLO</span>
+          </div>
+        </article>
+
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Backend Engineer</h3>
+            <p class="experience-meta">Feb 2021 - Feb 2022</p>
+            <p class="experience-meta">Jakarta, Indonesia · Remote</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark">MileApp</span>
+          </div>
+        </article>
+
+        <article class="experience-row">
+          <div>
+            <h3 class="experience-role">Software Engineer</h3>
+            <p class="experience-meta">May 2019 - Sep 2020</p>
+            <p class="experience-meta">Makassar, Indonesia · On-site</p>
+          </div>
+          <div class="experience-brand">
+            <span class="experience-brand-mark">Bosowa</span>
+          </div>
+        </article>
+      </section>
+    </section>
+
+    <section id="tool-stack" class="section-anchor page-shell py-16">
+      <div class="mb-8 max-w-2xl">
+        <p class="section-label">Tool Stack</p>
+        <h2 class="section-heading">The tools I keep open while building.</h2>
+      </div>
+      <div class="tool-stack-card">
+        <section class="tool-stack-grid" aria-label="Frequently used tools">
+          <article class="tool-stack-item" aria-label="Codex">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <img src="assets/tool-stack/codex.png" alt="">
+            </div>
+            <h3 class="tool-stack-name">Codex</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Hermes Agent">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <img class="tool-stack-theme-dark" src="assets/tool-stack/hermes-agent.png" alt="">
+              <img class="tool-stack-theme-light" src="assets/tool-stack/hermes-agent.png" alt="">
+            </div>
+            <h3 class="tool-stack-name">Hermes Agent</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Zed">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" aria-hidden="true">
+                <path fill="currentColor" d="M48 32c-8.8 0-16 7.2-16 16v352H0V48C0 21.5 21.5 0 48 0h428.7c21.4 0 32.1 25.9 17 41l-264 264H304v-33h32v41c0 13.3-10.7 24-24 24H197.6l-55 55H392V192h32v200c0 17.7-14.3 32-32 32H110.6l-56 56H464c8.8 0 16-7.2 16-16V112h32v352c0 26.5-21.5 48-48 48H35.3c-21.4 0-32.1-25.9-17-41l263-263H208v32h-32v-40c0-13.3 10.7-24 24-24h113.4l56-56H120v200H88V120c0-17.7 14.3-32 32-32h281.4l56-56z"/>
+              </svg>
+            </div>
+            <h3 class="tool-stack-name">Zed</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Google AI Studio">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <img src="assets/tool-stack/google-ai-studio.png" alt="">
+            </div>
+            <h3 class="tool-stack-name">Google AI Studio</h3>
+          </article>
+          <article class="tool-stack-item" aria-label="Obsidian">
+            <div class="tool-stack-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" aria-hidden="true">
+                <path fill="#a079ff" d="M198.9 298.9c13.1-3.9 34.3-9.8 58.5-11.4-13-30.8-18.2-64.4-15.3-97.7 3.3-33 15.1-60.8 26.5-84.2l6.9-14.3 9-18.4c4.7-10 8.2-18.8 9.8-27.1 1.6-8.2 1.6-15.3-.4-22.2s-6.1-14.3-14.3-22.4c-11.1-3-23-.2-31.6 7.5l-105.6 95c-5.9 5.3-9.8 12.4-11 20.4l-9 60.4c34 31.6 60.2 70.8 76.5 114.4M118.1 212l-2 6.1-55.9 124.4c-5.7 12.8-3.1 27.8 6.5 37.9l87.9 90.3c37.3-51.5 44.1-119 17.9-177-13.1-30.2-31.5-57.9-54.4-81.7M175 481.6l4.7.4c16.5.4 44.7 2 67.3 6.1 18.6 3.5 55.5 13.7 85.6 22.4 23 6.9 46.9-11.6 50.2-35.5 2.4-17.3 7.1-36.9 15.5-55.1-9.9-31.4-27.7-59.6-51.8-82-16.7-14.5-37.2-23.8-59.1-26.7-27.7-2.7-55.7.5-82 9.6 13.5 55.5 2.3 114-30.6 160.7h.2zm238-86.1c19-28.5 32.6-51 39.6-63.2 3.4-6 2.9-13.4-1.2-19-17.2-22.2-31.9-46.3-43.6-71.8-11.8-28.3-13.5-72.2-13.7-93.4 0-8.2-2.4-16.1-7.5-22.4L318.3 39c0 3.9-.8 7.7-1.6 11.6-2.6 11-6.4 21.7-11.4 31.8l-9.4 19.6-6.7 13.5c-12.6 23.8-20.7 49.7-24.1 76.5-2.8 32.9 3.2 66 17.3 95.8 29.2 2.2 57 13.8 79.1 33 22.6 20.7 40.3 46.2 51.5 74.7"/>
+              </svg>
+            </div>
+            <h3 class="tool-stack-name">Obsidian</h3>
+          </article>
         </section>
       </div>
+    </section>
 
-      <!-- Terminal / Code Block -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Terminal</h2>
-        <div class="token-card p-0 overflow-hidden">
-          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Computer Frame Component</div>
-          <div class="p-6">
-            <div class="computer-frame max-w-lg mx-auto">
-              <div class="computer-screen">
-                <div class="font-mono text-xs md:text-sm leading-relaxed space-y-1">
-                  <div class="text-boring-text-secondary">$ git clone github.com/michaelsimoes/boring-computers</div>
-                  <div class="text-boring-text-secondary">$ cd boring-computers && npm install</div>
-                  <div class="text-boring-text-secondary"># add your keys, then run boringd on a KVM box — or your Mac</div>
-                  <div class="text-boring-text-secondary">$ ./boringd</div>
-                  <div class="text-boring-accent mt-2">boring computers · a computer is one HTTP call away</div>
-                  <div class="text-boring-text-secondary mt-2">$ curl -XPOST $BORING/v1/machines -d '{"template":"desktop"}'</div>
-                  <div class="text-boring-text-secondary">→ {"id":"m-1a2b3c4d","mode":"warm","boot_ms":0}<span class="cursor-blink text-boring-accent">▌</span></div>
-                </div>
-              </div>
-              <div class="flex items-center justify-between mt-3 px-1">
-                <span class="computer-brand">boring. classic</span>
-                <div class="flex items-center gap-2">
-                  <div class="w-24 h-1 bg-boring-border rounded-full"></div>
-                  <div class="computer-indicator"></div>
-                </div>
-              </div>
+    <section id="contact" class="section-anchor page-shell py-16">
+      <div class="max-w-2xl">
+        <p class="section-label">Contact</p>
+        <h2 class="section-heading">Interested in building practical systems for real operations?</h2>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-boring-text-secondary">
+          I am open to focused engineering conversations around backend systems, internal tools, AI-assisted workflows, fleet/logistics platforms, and commerce infrastructure.
+        </p>
+        <div class="mt-12">
+          <details class="contact-popover">
+            <summary>Discuss a Project</summary>
+            <div class="contact-menu">
+              <a class="contact-option" href="https://wa.me/6281336110224" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a class="contact-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=gustalaksanadika@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email @gustalaksanadika">@gustalaksanadika</a>
             </div>
-          </div>
-          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">bg: #E8E4DC, screen: #0D0D0D, indicator: #22C55E</div>
-        </div>
-      </div>
-
-      <!-- Data Grid -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Data Grid</h2>
-        <div class="token-card p-0 overflow-hidden">
-          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Feature Grid (Table Layout)</div>
-          <div class="p-6">
-            <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-6">THE LINEUP</p>
-            <div class="grid-table grid-table-3">
-              <div class="grid-cell">
-                <h3 class="text-boring-text font-medium mb-2">Sandboxes</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Headless microVMs with a serial console + an AI that drives them.</p>
-              </div>
-              <div class="grid-cell">
-                <h3 class="text-boring-text font-medium mb-2">Computers</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Full Linux desktops over VNC — a real browser plus claude, codex, cursor & pi preinstalled.</p>
-              </div>
-              <div class="grid-cell">
-                <h3 class="text-boring-text font-medium mb-2">Agents</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">An AI that sees the screen and drives the mouse & keyboard.</p>
-              </div>
-              <div class="grid-cell">
-                <h3 class="text-boring-text font-medium mb-2">Inference</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">One OpenAI-compatible endpoint for every model — Claude on Anthropic, the rest via OpenRouter.</p>
-              </div>
-              <div class="grid-cell">
-                <h3 class="text-boring-text font-medium mb-2">Storage</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Persistent volumes that outlive the machine — save a computer, restore it into a fresh one.</p>
-              </div>
-              <div class="grid-cell">
-                <h3 class="text-boring-text font-medium mb-2">& More</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Network, snapshots, templates, and everything else you'd expect.</p>
-              </div>
-            </div>
-          </div>
-          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">grid: 3-col, border: 1px solid #27272A, gap: 0 (border-collapse style)</div>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Stats</h2>
-        <div class="token-card p-0 overflow-hidden">
-          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Stats Row</div>
-          <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div>
-                <div class="text-4xl font-bold text-boring-text mb-2">~3 ms</div>
-                <div class="text-sm font-mono text-boring-text-secondary">snapshot boot</div>
-              </div>
-              <div>
-                <div class="text-4xl font-bold text-boring-text mb-2">VM-grade</div>
-                <div class="text-sm font-mono text-boring-text-secondary">isolation, per machine</div>
-              </div>
-              <div>
-                <div class="text-4xl font-bold text-boring-text mb-2">Apache-2.0</div>
-                <div class="text-sm font-mono text-boring-text-secondary">open source, self-hostable</div>
-              </div>
-            </div>
-          </div>
-          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">text: 36px bold, label: 14px mono secondary</div>
-        </div>
-      </div>
-
-      <!-- Feature List -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Feature List</h2>
-        <div class="token-card p-0 overflow-hidden">
-          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">How It Works Grid</div>
-          <div class="p-6">
-            <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-8">HOW IT WORKS</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-              <div>
-                <h3 class="text-boring-text font-medium mb-2">Firecracker microVMs</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Real hardware-virtualized isolation — a kernel per machine, not a shared container.</p>
-              </div>
-              <div>
-                <h3 class="text-boring-text font-medium mb-2">Jailed & capped</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Each VM runs unprivileged and chrooted, with per-machine CPU, memory and PID limits.</p>
-              </div>
-              <div>
-                <h3 class="text-boring-text font-medium mb-2">Snapshot-restore</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">A shell resumes from a memory snapshot in ~3 ms. No cold boot, no waiting.</p>
-              </div>
-              <div>
-                <h3 class="text-boring-text font-medium mb-2">Ephemeral by default</h3>
-                <p class="text-sm text-boring-text-secondary leading-relaxed">Machines clean themselves up on a TTL — nothing lingers. Or flip "keep alive" and one runs until you stop it.</p>
-              </div>
-            </div>
-          </div>
-          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">2-col grid, gap-x: 48px, gap-y: 32px</div>
-        </div>
-      </div>
-
-      <!-- Navigation -->
-      <div class="mb-16">
-        <h2 class="text-lg font-semibold mb-6">Navigation</h2>
-        <div class="token-card p-0 overflow-hidden">
-          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Site Header</div>
-          <div class="p-6">
-            <nav class="flex items-center justify-between">
-              <a href="#" class="font-mono text-sm font-semibold text-boring-text">boring.</a>
-              <div class="flex items-center gap-6">
-                <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
-                <a href="#" target="_blank" class="text-boring-text-secondary hover:text-boring-text transition-colors">
-                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                </a>
-              </div>
-            </nav>
-          </div>
-          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">height: 64px, container: max-w-5xl, logo: mono 14px semibold</div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div>
-        <h2 class="text-lg font-semibold mb-6">Footer</h2>
-        <div class="token-card p-0 overflow-hidden">
-          <div class="text-boring-text-secondary text-xs p-4 border-b border-boring-border">Site Footer</div>
-          <div class="p-6">
-            <footer class="flex items-center justify-between py-6 border-t border-boring-border">
-              <div>
-                <div class="font-mono text-sm font-semibold text-boring-text mb-1">boring computers</div>
-                <div class="font-mono text-xs text-boring-text-muted">Computers that are refreshingly boring.</div>
-              </div>
-              <div class="flex items-center gap-6">
-                <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
-                <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">GitHub</a>
-              </div>
-            </footer>
-          </div>
-          <div class="px-4 py-3 border-t border-boring-border text-xs text-boring-text-muted font-mono">border-top: 1px solid #27272A, flex between</div>
+          </details>
         </div>
       </div>
     </section>
-
-    <!-- PAGE PREVIEW SECTION -->
-    <section id="preview">
-      <div class="ds-label">Live Preview</div>
-      <p class="text-boring-text-secondary text-sm mb-8">Full landing page recreation using the design system tokens and components above.</p>
-      
-      <div class="border border-boring-border rounded-xl overflow-hidden bg-boring-bg">
-        <!-- Preview: Hero -->
-        <div class="px-6 md:px-12 pt-8 pb-12">
-          <nav class="flex items-center justify-between mb-16">
-            <a href="#" class="font-mono text-sm font-semibold text-boring-text">boring.</a>
-            <div class="flex items-center gap-6">
-              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
-              <a href="https://github.com" target="_blank" class="text-boring-text-secondary hover:text-boring-text transition-colors">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-              </a>
-            </div>
-          </nav>
-          
-          <div class="max-w-2xl">
-            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">Computers that are <span class="text-boring-text-secondary">refreshingly boring.</span></h1>
-            <p class="text-boring-text-secondary leading-relaxed mb-6">
-              Instant Firecracker microVMs — a terminal, a real browser, coding agents preinstalled, and an AI that drives them. <span class="text-boring-text font-medium">Open source.</span> Fork it and run your own with your own keys.
-            </p>
-            <div class="flex items-center gap-3 mb-12">
-              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
-                Fork on GitHub
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </button>
-              <button class="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-boring-border text-boring-text-secondary font-mono text-sm rounded-md hover:border-boring-text-secondary hover:text-boring-text transition-colors">
-                Read the docs
-              </button>
-            </div>
-          </div>
-          
-          <div class="computer-frame max-w-2xl">
-            <div class="computer-screen">
-              <div class="font-mono text-xs md:text-sm leading-relaxed space-y-1">
-                <div class="text-boring-text-secondary">$ git clone github.com/michaelsimoes/boring-computers</div>
-                <div class="text-boring-text-secondary">$ cd boring-computers && npm install</div>
-                <div class="text-boring-text-secondary"># add your keys, then run boringd on a KVM box — or your Mac</div>
-                <div class="text-boring-text-secondary">$ ./boringd</div>
-                <div class="text-boring-accent mt-2">boring computers · a computer is one HTTP call away</div>
-                <div class="text-boring-text-secondary mt-2">$ curl -XPOST $BORING/v1/machines -d '{"template":"desktop"}'</div>
-                <div class="text-boring-text-secondary">→ {"id":"m-1a2b3c4d","mode":"warm","boot_ms":0}<span class="cursor-blink text-boring-accent">▌</span></div>
-              </div>
-            </div>
-            <div class="flex items-center justify-between mt-3 px-1">
-              <span class="computer-brand">boring. classic</span>
-              <div class="flex items-center gap-2">
-                <div class="w-24 h-1 bg-boring-border rounded-full"></div>
-                <div class="computer-indicator"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Preview: The Lineup -->
-        <div class="px-6 md:px-12 py-16">
-          <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-6">THE LINEUP</p>
-          <div class="grid-table grid-table-3">
-            <div class="grid-cell">
-              <h3 class="text-boring-text font-medium mb-2">Sandboxes</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Headless microVMs with a serial console + an AI that drives them. python3 · node · claude, milliseconds to boot, opt-in internet.</p>
-            </div>
-            <div class="grid-cell">
-              <h3 class="text-boring-text font-medium mb-2">Computers</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Full Linux desktops over VNC — a real browser plus claude, codex, cursor & pi preinstalled.</p>
-            </div>
-            <div class="grid-cell">
-              <h3 class="text-boring-text font-medium mb-2">Agents</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">An AI that sees the screen and drives the mouse & keyboard.</p>
-            </div>
-            <div class="grid-cell">
-              <h3 class="text-boring-text font-medium mb-2">Inference</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">One OpenAI-compatible endpoint for every model — Claude on Anthropic, the rest via OpenRouter.</p>
-            </div>
-            <div class="grid-cell">
-              <h3 class="text-boring-text font-medium mb-2">Storage</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Persistent volumes that outlive the machine — save a computer, restore it into a fresh one.</p>
-            </div>
-            <div class="grid-cell bg-boring-surface/50">
-              <!-- empty cell to match image layout -->
-            </div>
-          </div>
-        </div>
-
-        <!-- Preview: How It Works -->
-        <div class="px-6 md:px-12 py-16">
-          <p class="text-sm font-medium uppercase tracking-widest text-boring-text-secondary mb-8">HOW IT WORKS</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-            <div>
-              <h3 class="text-boring-text font-medium mb-2">Firecracker microVMs</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Real hardware-virtualized isolation — a kernel per machine, not a shared container.</p>
-            </div>
-            <div>
-              <h3 class="text-boring-text font-medium mb-2">Jailed & capped</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Each VM runs unprivileged and chrooted, with per-machine CPU, memory and PID limits.</p>
-            </div>
-            <div>
-              <h3 class="text-boring-text font-medium mb-2">Snapshot-restore</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">A shell resumes from a memory snapshot in ~3 ms. No cold boot, no waiting.</p>
-            </div>
-            <div>
-              <h3 class="text-boring-text font-medium mb-2">Ephemeral by default</h3>
-              <p class="text-sm text-boring-text-secondary leading-relaxed">Machines clean themselves up on a TTL — nothing lingers. Or flip "keep alive" and one runs until you stop it.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Preview: Stats -->
-        <div class="px-6 md:px-12 py-16">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div class="text-4xl font-bold text-boring-text mb-2">~3 ms</div>
-              <div class="text-sm font-mono text-boring-text-secondary">snapshot boot</div>
-            </div>
-            <div>
-              <div class="text-4xl font-bold text-boring-text mb-2">VM-grade</div>
-              <div class="text-sm font-mono text-boring-text-secondary">isolation, per machine</div>
-            </div>
-            <div>
-              <div class="text-4xl font-bold text-boring-text mb-2">Apache-2.0</div>
-              <div class="text-sm font-mono text-boring-text-secondary">open source, self-hostable</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Preview: CTA Card -->
-        <div class="px-6 md:px-12 py-16">
-          <div class="bg-boring-surface-elevated border border-boring-border rounded-xl p-8 md:p-10">
-            <h3 class="text-boring-text font-medium text-lg mb-2">Run your own</h3>
-            <p class="text-sm text-boring-text-secondary leading-relaxed max-w-2xl mb-6">
-              It's open source (Apache-2.0) and self-hosted — bring your own Anthropic + S3 keys, point it at a Linux box with <code class="font-mono text-boring-text">/dev/kvm</code> (x86_64 or arm64), or run the whole thing on an Apple Silicon Mac with one command. Nothing phones home.
-            </p>
-            <div class="flex items-center gap-4">
-              <button class="inline-flex items-center gap-2 px-4 py-2 bg-boring-text text-boring-bg font-mono text-sm font-medium rounded-md hover:bg-boring-text-secondary transition-colors">
-                Fork on GitHub
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </button>
-              <a href="#" class="inline-flex items-center gap-1 text-boring-text-secondary font-mono text-sm hover:text-boring-text transition-colors group">
-                setup & API docs
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="group-hover:translate-x-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Preview: Footer -->
-        <div class="px-6 md:px-12 py-8">
-          <footer class="flex flex-col md:flex-row items-start md:items-center justify-between pt-8 border-t border-boring-border">
-            <div>
-              <div class="font-mono text-sm font-semibold text-boring-text mb-1">boring computers</div>
-              <div class="font-mono text-xs text-boring-text-muted">Computers that are refreshingly boring.</div>
-            </div>
-            <div class="flex items-center gap-6 mt-4 md:mt-0">
-              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">Docs</a>
-              <a href="#" class="text-sm text-boring-text-secondary hover:text-boring-text transition-colors">GitHub</a>
-            </div>
-          </footer>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Back to top -->
-  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 p-3 bg-boring-surface-elevated border border-boring-border rounded-lg text-boring-text-secondary hover:text-boring-text hover:border-boring-text-secondary transition-colors shadow-lg" aria-label="Back to top">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
+  <footer class="border-t border-boring-border py-8">
+    <div class="page-shell flex flex-col gap-3 text-sm text-boring-text-muted md:flex-row md:items-center md:justify-between">
+      <p>&copy; 2026 Dika Laksana.</p>
+      <div class="flex items-center gap-3">
+        <a class="social-link" href="https://www.threads.net/@dikalaksana_" target="_blank" rel="noopener noreferrer" aria-label="Open Threads profile @dikalaksana_">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.5 20.25c-4.56 0-7.5-2.88-7.5-7.5 0-5.6 3.18-8.25 7.5-8.25 3.98 0 6.75 2.36 6.75 6.19 0 2.6-1.43 4.23-3.52 4.23-1.08 0-1.9-.39-2.34-1.1-.66 1.24-1.83 1.9-3.37 1.9-1.86 0-3.14-1.15-3.14-2.8 0-1.92 1.43-3.13 3.72-3.13 1.03 0 2.1.2 3.11.55v-.37c0-1.2-.74-1.92-2.26-1.92-.97 0-1.75.32-2.36.95"/>
+            <path d="M15.87 12.63c-.53 1.1-1.48 1.77-2.7 1.77-1.19 0-1.97-.65-1.97-1.65 0-1.06.86-1.75 2.15-1.75.83 0 1.66.19 2.52.52"/>
+          </svg>
+        </a>
+        <a class="social-link" href="https://www.instagram.com/dikalaksana_" target="_blank" rel="noopener noreferrer" aria-label="Open Instagram profile @dikalaksana_">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+            <circle cx="12" cy="12" r="3.5"></circle>
+            <circle cx="17" cy="7" r="1"></circle>
+          </svg>
+        </a>
+        <a class="social-link" href="https://github.com/laksanagusta" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.39 7.86 10.92.58.1.79-.25.79-.56v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.29-1.68-1.29-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18A10.9 10.9 0 0 1 12 6.08c.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.06.78 2.14v3.14c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
 
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const storageKey = 'portfolio-theme';
+
+      function updateThemeButtons(theme) {
+        const isDark = theme === 'dark';
+        document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+          button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          button.setAttribute('aria-pressed', String(!isDark));
+          const lightIcon = button.querySelector('.theme-icon-light');
+          const darkIcon = button.querySelector('.theme-icon-dark');
+          if (lightIcon) lightIcon.hidden = !isDark;
+          if (darkIcon) darkIcon.hidden = isDark;
+        });
+      }
+
+      function setTheme(theme) {
+        root.dataset.theme = theme;
+        try {
+          localStorage.setItem(storageKey, theme);
+        } catch (_) {}
+        updateThemeButtons(theme);
+      }
+
+      const savedTheme = (() => {
+        try {
+          return localStorage.getItem(storageKey);
+        } catch (_) {
+          return null;
+        }
+      })();
+
+      setTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+      const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      function initScrollReveal() {
+        if (motionQuery.matches || !('IntersectionObserver' in window)) return;
+
+        const revealTargets = [
+          ...document.querySelectorAll('#projects > div:first-child, .project-showcase-tile, #experience > div:first-child, .experience-row, #tool-stack > div:first-child, .tool-stack-item, #contact > div'),
+        ];
+
+        revealTargets.forEach((element, index) => {
+          element.classList.add('motion-reveal');
+          element.style.setProperty('--motion-delay', `${Math.min(index % 4, 3) * 70}ms`);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.16 });
+
+        revealTargets.forEach((element) => observer.observe(element));
+      }
+
+      initScrollReveal();
+
+      document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!motionQuery.matches) {
+            button.classList.add('theme-toggle-flash');
+            window.setTimeout(() => button.classList.remove('theme-toggle-flash'), 160);
+          }
+          setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
