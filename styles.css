@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap');
+
+:root {
+  color-scheme: light;
+  --background: #fcfcfc;
+  --ink: #202020;
+  --body: rgb(32 32 32 / 80%);
+  --muted: rgb(32 32 32 / 40%);
+  --action: #363636;
+  --column: 552px;
+  --sans: 'Inter', system-ui, sans-serif;
+  --serif: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--body); font: 400 14px/23px var(--sans); -webkit-font-smoothing: antialiased; }
+a { display: inline-block; color: inherit; text-decoration: none; text-underline-offset: 3px; transform-origin: center; transition: transform 150ms ease-out, text-decoration-color 150ms ease; }
+a:hover { text-decoration: underline; transform: scale(1.015); }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; border-radius: 2px; }
+p, h1, h2, h3 { margin: 0; }
+.portfolio { width: min(var(--column), calc(100% - 48px)); margin: 118px auto 0; padding-bottom: 180px; }
+.identity { margin-bottom: 36px; }
+.identity h1 { color: var(--ink); font-size: 16px; font-weight: 500; line-height: 20px; }
+.eyebrow { color: var(--muted); font-size: 12px; font-weight: 400; line-height: 15px; text-transform: uppercase; }
+.identity .eyebrow { margin-top: 8px; }
+.bio-copy { text-align: justify; }
+.serif-emphasis { font-family: var(--serif); font-size: 16px; }
+.company-name { text-decoration-line: underline; text-decoration-style: dashed; text-decoration-color: var(--muted); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.social { margin-top: 23px; color: var(--muted); }
+.social a { padding-block: 1px; padding-inline: 7px; border-radius: 999px; background: rgb(32 32 32 / 6%); color: rgb(32 32 32 / 80%); font-size: 12px; line-height: 18px; text-decoration: none; }
+.social a:hover { background: rgb(32 32 32 / 10%); color: rgb(32 32 32 / 80%); text-decoration: none; }
+.writing-title a,
+.specimen a:not(.button) { text-decoration-line: underline; text-decoration-color: var(--muted); }
+.writing { margin-top: 64px; }
+.writing .eyebrow { margin-bottom: 16px; }
+.writing-title { color: var(--ink); font: 400 14px/17px var(--serif); margin-bottom: 3px; }
+.contact { margin-top: 56px; }
+.contact .eyebrow { margin-bottom: 16px; }
+.contact > p { text-align: justify; }
+.contact-lead { color: var(--ink); margin-bottom: 3px; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 12px 18px; border-radius: 999px; background: var(--action); color: var(--background); font: 400 14px/20px var(--sans); transition: background-color 150ms ease, transform 150ms ease-out; }
+.button:hover { background: var(--ink); text-decoration: none; }
+.button:focus-visible { border-radius: 999px; }
+.contact .button { margin-top: 20px; }
+.updated { margin-top: 116px; color: var(--muted); font-size: 12px; line-height: 18px; }
+.updated time { color: var(--ink); }
+.contact-popover { width: min(440px, calc(100vw - 32px)); max-width: none; max-block-size: calc(100dvh - 32px); overflow: visible; margin: auto; padding: 0; border: 0; background: transparent; color: var(--body); opacity: 0; transform: translateY(10px) scale(.98); transition: opacity 280ms cubic-bezier(.2, 0, 0, 1), transform 280ms cubic-bezier(.2, 0, 0, 1); }
+.contact-popover.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+.contact-popover.is-closing { opacity: 0; transform: translateY(4px) scale(.985); transition-duration: 180ms; transition-timing-function: cubic-bezier(.3, 0, 1, 1); }
+.contact-popover::backdrop { background: rgb(255 255 255 / 0%); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background-color 280ms cubic-bezier(.2, 0, 0, 1), backdrop-filter 280ms cubic-bezier(.2, 0, 0, 1); }
+.contact-popover.is-visible::backdrop { background: rgb(255 255 255 / 72%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.contact-popover.is-closing::backdrop { background: rgb(255 255 255 / 0%); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition-duration: 180ms; transition-timing-function: cubic-bezier(.3, 0, 1, 1); }
+.popover-card { position: relative; max-block-size: calc(100dvh - 32px); overflow-x: hidden; overflow-y: auto; padding: 28px; border: 0; border-radius: 18px; background: var(--background); box-shadow: 0 0 6px rgb(32 32 32 / 6%), 0 10px 24px rgb(32 32 32 / 8%); }
+.popover-close { position: absolute; inset-block-start: 16px; inset-inline-end: 16px; display: grid; width: 40px; height: 40px; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; line-height: 0; transition: color 150ms ease-out; }
+.popover-close::before { position: absolute; inset: 4px; border-radius: 50%; background: transparent; content: ''; pointer-events: none; transition: background-color 150ms ease-out; }
+.popover-close-icon { position: relative; z-index: 1; display: block; width: 16px; height: 16px; transform: translateY(-.5px); }
+.popover-close-icon path { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: square; }
+.popover-close:hover { color: var(--ink); }
+.popover-close:hover::before { background: rgb(32 32 32 / 7%); }
+.popover-card h2 { max-width: 300px; margin-top: 0; color: var(--ink); font-size: 14px; font-weight: 500; line-height: 20px; text-wrap: balance; }
+.contact-options { display: grid; gap: 12px; margin-top: 24px; }
+.contact-option { position: relative; display: flex; flex-direction: column; gap: 4px; padding-block: 16px; padding-inline: 17px 42px; border: 1px solid rgb(32 32 32 / 13%); border-radius: 12px; background: var(--background); transition: border-color 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out; }
+.contact-option:hover { border-color: rgb(32 32 32 / 28%); background: #fff; text-decoration: none; }
+.contact-option-label { color: var(--muted); font-size: 11px; line-height: 15px; text-transform: uppercase; letter-spacing: .08em; }
+.contact-option-value { min-inline-size: 0; color: var(--ink); font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
+.contact-option-arrow { position: absolute; inset-block-start: 50%; inset-inline-end: 17px; color: var(--muted); font-size: 20px; line-height: 1; transform: translateY(-50%); }
+.skip-link { position: absolute; inset-block-start: 16px; inset-inline-start: 24px; padding: 8px 12px; background: var(--ink); color: var(--background); transform: translateY(-200%); }
+.skip-link:focus { transform: translateY(0); }
+.system { max-width: 800px; margin: 64px auto; padding: 0 24px; }
+.system > header { margin-bottom: 48px; }
+.system > header h1 { margin: 24px 0 8px; font-size: 28px; line-height: 36px; color: var(--ink); }
+.system-section { padding: 32px 0; border-top: 1px solid #e5e5e5; }
+.system-section > h2 { margin-bottom: 24px; font-size: 18px; color: var(--ink); }
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.swatch { display: block; height: 64px; border: 1px solid #e5e5e5; margin-bottom: 8px; background: var(--swatch); }
+.specimen { max-width: var(--column); }
+.specimen .identity { margin-bottom: 24px; }
+.specimen > p + p { margin-top: 16px; }
+.system-note { margin-top: 16px; }
+@media (max-width: 640px) {
+  .portfolio { margin-top: 64px; padding-bottom: 72px; }
+  .bio-copy { text-align: left; }
+  .updated { margin-top: 88px; }
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .popover-card { padding: 26px 20px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  a, .button, .contact-popover, .contact-popover::backdrop, .popover-close, .popover-close::before, .contact-option { transition: none; }
+  a:hover { transform: none; }
+  .contact-popover, .contact-popover.is-visible, .contact-popover.is-closing { opacity: 1; transform: none; }
+  .contact-popover::backdrop, .contact-popover.is-visible::backdrop, .contact-popover.is-closing::backdrop { background: rgb(255 255 255 / 72%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+}
