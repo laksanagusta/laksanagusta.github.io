@@ -9,4 +9,4 @@ Run locally with `python3 -m http.server 4173`, then open http://localhost:4173.
 - `styles.css`: shared styling and responsive layout.
 - `DESIGN.md`: design rules and source limitations.
 
-The existing GitHub Pages workflow publishes the repository on pushes to `main`. Fonts load from Google Fonts with local system fallbacks. “Discuss a project” opens an accessible popover with Email and WhatsApp options. The “Prince of Rome” writing preview links to its full Medium article.
+The existing GitHub Pages workflow publishes the repository on pushes to `main`. Fonts load from Google Fonts with local system fallbacks. “Discuss a project” opens an accessible popover with Email and WhatsApp options. “Download CV” opens `assets/dika-laksana-cv.pdf` in a new tab. The “Prince of Rome” writing preview links to its full Medium article.
