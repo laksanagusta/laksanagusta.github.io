@@ -38,10 +38,13 @@ p, h1, h2, h3 { margin: 0; }
 .contact .eyebrow { margin-bottom: 16px; }
 .contact > p { text-align: justify; }
 .contact-lead { color: var(--ink); margin-bottom: 3px; }
+.action-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 12px 18px; border-radius: 999px; background: var(--action); color: var(--background); font: 400 14px/20px var(--sans); transition: background-color 150ms ease, transform 150ms ease-out; }
 .button:hover { background: var(--ink); text-decoration: none; }
 .button:focus-visible { border-radius: 999px; }
-.contact .button { margin-top: 20px; }
+.button-secondary { border: 1px solid rgb(32 32 32 / 24%); background: transparent; color: var(--ink); }
+.button-secondary:hover { border-color: rgb(32 32 32 / 40%); background: rgb(32 32 32 / 6%); color: var(--ink); }
+.contact .action-row { margin-top: 20px; }
 .updated { margin-top: 116px; color: var(--muted); font-size: 12px; line-height: 18px; }
 .updated time { color: var(--ink); }
 .contact-popover { width: min(440px, calc(100vw - 32px)); max-width: none; max-block-size: calc(100dvh - 32px); overflow: visible; margin: auto; padding: 0; border: 0; background: transparent; color: var(--body); opacity: 0; transform: translateY(10px) scale(.98); transition: opacity 280ms cubic-bezier(.2, 0, 0, 1), transform 280ms cubic-bezier(.2, 0, 0, 1); }
